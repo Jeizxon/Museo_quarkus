@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Lámina del coro alto y facistol de madera tallada con libro coral abierto">
+  <rect width="800" height="600" fill="#F2EAD8"/>
+  <rect x="26" y="26" width="748" height="548" fill="none" stroke="#3F3122" stroke-width="2"/>
+  <!-- Baranda del coro alto -->
+  <rect x="120" y="370" width="560" height="24" fill="#35251B" stroke="#1C1815" stroke-width="2"/>
+  <rect x="120" y="485" width="560" height="26" fill="#231913"/>
+  <!-- Facistol y libro coral abierto -->
+  <polygon points="400,260 285,370 515,370" fill="#4A3425" stroke="#1C1815" stroke-width="2"/>
+  <rect x="305" y="170" width="94" height="122" fill="#FAF6EC" stroke="#6E5739" stroke-width="2"/>
+  <rect x="401" y="170" width="94" height="122" fill="#F4ECDA" stroke="#6E5739" stroke-width="2"/>
+  <line x1="322" y1="202" x2="382" y2="202" stroke="#7A2320" stroke-width="3"/>
+  <line x1="322" y1="224" x2="382" y2="224" stroke="#4A4035" stroke-width="1.5"/>
+  <line x1="322" y1="242" x2="382" y2="242" stroke="#4A4035" stroke-width="1.5"/>
+  <line x1="418" y1="202" x2="478" y2="202" stroke="#4A4035" stroke-width="1.5"/>
+  <line x1="418" y1="224" x2="478" y2="224" stroke="#4A4035" stroke-width="1.5"/>
+  <line x1="418" y1="242" x2="478" y2="242" stroke="#4A4035" stroke-width="1.5"/>
+  <text x="54" y="64" font-family="monospace" font-size="13" fill="#7A2320" letter-spacing="2">LÁMINA DOC-01 · CORO ALTO Y FACISTOL DOMINICO</text>
+  <text x="54" y="548" font-family="serif" font-size="15" fill="#2A1D15">Mobiliario litúrgico en cedro y tradición coral de la Orden de Predicadores</text>
+</svg>

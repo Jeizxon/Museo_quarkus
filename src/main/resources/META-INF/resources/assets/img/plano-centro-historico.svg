@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Plano esquemático de ubicación en el Centro Histórico de Tunja: Carrera 11 entre Calles 19 y 20">
+  <rect width="800" height="500" fill="#F4EFE2"/>
+  <rect x="20" y="20" width="760" height="460" fill="none" stroke="#4A3F33" stroke-width="2"/>
+  <!-- Manzanas coloniales del Centro Histórico -->
+  <g fill="#E3D8C2" stroke="#9E8E72" stroke-width="1.5">
+    <rect x="70" y="70" width="185" height="145"/>
+    <rect x="305" y="70" width="190" height="145"/>
+    <rect x="545" y="70" width="185" height="145"/>
+    <rect x="70" y="265" width="185" height="155"/>
+    <rect x="545" y="265" width="185" height="155"/>
+  </g>
+  <!-- Manzana destacada del Templo de Santo Domingo -->
+  <rect x="305" y="265" width="190" height="155" fill="#EFE4CE" stroke="#7A2320" stroke-width="3"/>
+  <rect x="335" y="295" width="130" height="90" fill="#7A2320"/>
+  <circle cx="400" cy="340" r="10" fill="#FAF6EC"/>
+  <!-- Etiquetas de vías reales -->
+  <text x="400" y="247" text-anchor="middle" font-family="monospace" font-size="13" fill="#2A2018" font-weight="bold">CALLE 20</text>
+  <text x="400" y="446" text-anchor="middle" font-family="monospace" font-size="13" fill="#2A2018" font-weight="bold">CALLE 19 (HACIA PLAZA DE BOLÍVAR)</text>
+  <text x="283" y="255" text-anchor="middle" font-family="monospace" font-size="13" fill="#7A2320" font-weight="bold" transform="rotate(-90 283 255)">CARRERA 11</text>
+  <text x="523" y="255" text-anchor="middle" font-family="monospace" font-size="13" fill="#2A2018" transform="rotate(-90 523 255)">CARRERA 10</text>
+  <text x="400" y="374" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#FAF6EC" font-weight="bold">SANTO DOMINGO</text>
+  <text x="46" y="52" font-family="monospace" font-size="12" fill="#7A2320" letter-spacing="1.5">CARTOGRAFÍA DE REFERENCIA · CENTRO HISTÓRICO DE TUNJA (5°32'07"N 73°22'04"O)</text>
+</svg>

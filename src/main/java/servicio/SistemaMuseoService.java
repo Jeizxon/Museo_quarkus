@@ -42,6 +42,7 @@ public class SistemaMuseoService {
     private int idRecorrido = 1;
 
     private boolean sincronizarBD = false;
+    private boolean mysqlConectado = false;
     private static final DateTimeFormatter FMT_WEB = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     // ---------- registrar ----------
@@ -500,6 +501,7 @@ public class SistemaMuseoService {
         }
         res.put("recorridos", lRecorridos);
         res.put("recorrido_sala", lRecorridoSala);
+        res.put("mysql_conectado", mysqlConectado);
 
         return res;
     }
@@ -651,10 +653,144 @@ public class SistemaMuseoService {
             }
 
             conn.commit();
-        } catch (Exception ignored) {
+            this.mysqlConectado = true;
+            recargarDesdeMySQL();
+            return;
+        } catch (Exception ex) {
+            this.mysqlConectado = false;
+            System.err.println("[SistemaMuseoService] No se pudo persistir en MySQL (XAMPP): " + ex.getMessage());
         }
 
-        recargarDesdeMySQL();
+        // Respaldo en memoria de Quarkus si MySQL (XAMPP) aun no esta encendido
+        aplicarEstadoWebEnMemoria(lMuseos, lSalas, lCategorias, lArtistas, lObjetos, lHistorial, lRecorridos, lRecorridoSala);
+    }
+
+    private void aplicarEstadoWebEnMemoria(
+            List<Map<String, Object>> lMuseos,
+            List<Map<String, Object>> lSalas,
+            List<Map<String, Object>> lCategorias,
+            List<Map<String, Object>> lArtistas,
+            List<Map<String, Object>> lObjetos,
+            List<Map<String, Object>> lHistorial,
+            List<Map<String, Object>> lRecorridos,
+            List<Map<String, Object>> lRecorridoSala) {
+
+        Map<Integer, Museo> nMuseos = new HashMap<>();
+        Map<Integer, SalaExposicion> nSalas = new HashMap<>();
+        Map<Integer, Categoria> nCategorias = new HashMap<>();
+        Map<Integer, Artista> nArtistas = new HashMap<>();
+        Map<Integer, Obra> nObras = new HashMap<>();
+        Map<Integer, RecorridoGuiado> nRecorridos = new HashMap<>();
+
+        int maxMuseo = 0, maxSala = 0, maxCat = 0, maxArt = 0, maxObra = 0, maxRec = 0;
+
+        for (Map<String, Object> m : lMuseos) {
+            int id = toInt(m.get("id"));
+            Museo obj = new Museo(id, toStr(m.get("nombre")), toStr(m.get("descripcion")),
+                    toDouble(m.get("latitud")), toDouble(m.get("longitud")), toStr(m.get("url_pagina")));
+            nMuseos.put(id, obj);
+            if (id > maxMuseo) maxMuseo = id;
+        }
+
+        for (Map<String, Object> s : lSalas) {
+            int id = toInt(s.get("id"));
+            Museo m = nMuseos.get(toInt(s.get("museo_id")));
+            if (m != null) {
+                SalaExposicion obj = new SalaExposicion(id, toStr(s.get("nombre")), toStr(s.get("descripcion")),
+                        toInt(s.get("capacidad")));
+                m.agregarSala(obj);
+                nSalas.put(id, obj);
+                if (id > maxSala) maxSala = id;
+            }
+        }
+
+        for (Map<String, Object> c : lCategorias) {
+            int id = toInt(c.get("id"));
+            nCategorias.put(id, new Categoria(id, toStr(c.get("nombre")), toStr(c.get("descripcion"))));
+            if (id > maxCat) maxCat = id;
+        }
+
+        for (Map<String, Object> a : lArtistas) {
+            int id = toInt(a.get("id"));
+            nArtistas.put(id, new Artista(id, toStr(a.get("nombre")), toStr(a.get("nacionalidad")), toStr(a.get("biografia"))));
+            if (id > maxArt) maxArt = id;
+        }
+
+        for (Map<String, Object> o : lObjetos) {
+            int id = toInt(o.get("id"));
+            Categoria cat = nCategorias.get(toInt(o.get("categoria_id")));
+            Integer idArt = toNullableInt(o.get("artista_id"));
+            Artista art = idArt != null ? nArtistas.get(idArt) : null;
+            SalaExposicion sala = nSalas.get(toInt(o.get("sala_exhibicion_id")));
+            if (cat != null && sala != null) {
+                Obra obj = new Obra(id, toStr(o.get("nombre")), cat, art, sala,
+                        toInt(o.get("porcentaje_conservacion")), LocalDateTime.now());
+                obj.setDescripcion(toStr(o.get("descripcion")));
+                obj.setUrlImagen(toStr(o.get("url_imagen")));
+                LocalDate fc = toLocalDate(o.get("fecha_creacion"));
+                LocalDate fa = toLocalDate(o.get("fecha_adquisicion"));
+                if (fc != null) obj.setFechaCreacion(fc);
+                if (fa != null) obj.setFechaAdquisicion(fa);
+                nObras.put(id, obj);
+                if (id > maxObra) maxObra = id;
+            }
+        }
+
+        Map<Integer, List<HistorialExhibicion>> histPorObra = new HashMap<>();
+        for (Map<String, Object> h : lHistorial) {
+            int idHist = toInt(h.get("id"));
+            int idOb = toInt(h.get("objeto_id"));
+            int idSa = toInt(h.get("sala_exhibicion_id"));
+            Obra ob = nObras.get(idOb);
+            SalaExposicion sa = nSalas.get(idSa);
+            LocalDateTime fi = toLocalDateTime(h.get("fecha_inicio"));
+            LocalDateTime ff = toLocalDateTime(h.get("fecha_fin"));
+            if (ob != null && sa != null) {
+                HistorialExhibicion reg = ob.crearRegistroHistorial(idHist, sa, fi != null ? fi : LocalDateTime.now(), ff);
+                histPorObra.computeIfAbsent(idOb, k -> new ArrayList<>()).add(reg);
+            }
+        }
+        for (Map.Entry<Integer, List<HistorialExhibicion>> entry : histPorObra.entrySet()) {
+            Obra ob = nObras.get(entry.getKey());
+            if (ob != null && !entry.getValue().isEmpty()) {
+                ob.reemplazarHistorial(entry.getValue(), ob.getSalaActual());
+            }
+        }
+
+        for (Map<String, Object> r : lRecorridos) {
+            int id = toInt(r.get("id"));
+            LocalDateTime fi = toLocalDateTime(r.get("fecha_inicio"));
+            LocalDateTime ff = toLocalDateTime(r.get("fecha_fin"));
+            RecorridoGuiado obj = new RecorridoGuiado(id, toStr(r.get("nombre")), toStr(r.get("descripcion")),
+                    fi != null ? fi : LocalDateTime.now(), ff != null ? ff : LocalDateTime.now().plusDays(1),
+                    toStr(r.get("url_pagina")));
+            nRecorridos.put(id, obj);
+            if (id > maxRec) maxRec = id;
+        }
+
+        List<Map<String, Object>> detallesOrdenados = new ArrayList<>(lRecorridoSala);
+        detallesOrdenados.sort(Comparator.comparingInt(d -> toInt(d.get("numero_orden"))));
+        for (Map<String, Object> d : detallesOrdenados) {
+            RecorridoGuiado r = nRecorridos.get(toInt(d.get("recorrido_id")));
+            SalaExposicion s = nSalas.get(toInt(d.get("sala_exhibicion_id")));
+            if (r != null && s != null) {
+                r.agregarSala(s);
+            }
+        }
+
+        this.museos = nMuseos;
+        this.salas = nSalas;
+        this.categorias = nCategorias;
+        this.artistas = nArtistas;
+        this.obras = nObras;
+        this.recorridos = nRecorridos;
+
+        this.idMuseo = maxMuseo + 1;
+        this.idSala = maxSala + 1;
+        this.idCategoria = maxCat + 1;
+        this.idArtista = maxArt + 1;
+        this.idObra = maxObra + 1;
+        this.idRecorrido = maxRec + 1;
     }
 
     public synchronized void recargarDesdeMySQL() {
@@ -681,6 +817,7 @@ public class SistemaMuseoService {
             }
 
             if (nMuseos.isEmpty()) {
+                this.mysqlConectado = true;
                 return;
             }
 
@@ -803,7 +940,9 @@ public class SistemaMuseoService {
             this.idArtista = maxArt + 1;
             this.idObra = maxObra + 1;
             this.idRecorrido = maxRec + 1;
+            this.mysqlConectado = true;
         } catch (Exception ignored) {
+            this.mysqlConectado = false;
         }
     }
 

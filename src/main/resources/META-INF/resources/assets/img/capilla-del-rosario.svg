@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Lámina arquitectónica de la Capilla de Nuestra Señora del Rosario en rojo almagre y pan de oro">
+  <defs>
+    <linearGradient id="bgAlmagre" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5E1A17"/>
+      <stop offset="50%" stop-color="#471311"/>
+      <stop offset="100%" stop-color="#2B0B0A"/>
+    </linearGradient>
+    <linearGradient id="goldLeaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E5C878"/>
+      <stop offset="50%" stop-color="#B89038"/>
+      <stop offset="100%" stop-color="#7D5E1E"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bgAlmagre)"/>
+  <rect x="26" y="26" width="748" height="548" fill="none" stroke="url(#goldLeaf)" stroke-width="3"/>
+  <rect x="36" y="36" width="728" height="528" fill="none" stroke="#E5C878" stroke-width="1" stroke-dasharray="6 4"/>
+  <!-- Retablo tripartito barroco en pan de oro -->
+  <rect x="150" y="95" width="500" height="420" fill="#38100E" stroke="url(#goldLeaf)" stroke-width="3"/>
+  <line x1="316" y1="95" x2="316" y2="515" stroke="url(#goldLeaf)" stroke-width="4"/>
+  <line x1="484" y1="95" x2="484" y2="515" stroke="url(#goldLeaf)" stroke-width="4"/>
+  <line x1="150" y1="245" x2="650" y2="245" stroke="url(#goldLeaf)" stroke-width="3"/>
+  <line x1="150" y1="390" x2="650" y2="390" stroke="url(#goldLeaf)" stroke-width="3"/>
+  <!-- Hornacina central -->
+  <path d="M 342 390 L 342 285 A 58 58 0 0 1 458 285 L 458 390 Z" fill="#230908" stroke="#E5C878" stroke-width="2.5"/>
+  <circle cx="400" cy="170" r="42" fill="none" stroke="url(#goldLeaf)" stroke-width="2.5"/>
+  <circle cx="400" cy="170" r="24" fill="none" stroke="#E5C878" stroke-width="1.2"/>
+  <text x="54" y="64" font-family="monospace" font-size="13" fill="#E5C878" letter-spacing="2">LÁMINA PAT-01 · CAPILLA DEL ROSARIO (PAN DE ORO Y ALMAGRE)</text>
+  <text x="54" y="548" font-family="serif" font-size="15" fill="#F6F2E8">Composición retablística barroca tallada en cedro y dorada con laminilla de oro</text>
+</svg>

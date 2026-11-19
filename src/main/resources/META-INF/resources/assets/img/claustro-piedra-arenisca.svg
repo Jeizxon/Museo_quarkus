@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Detalle epigráfico y sillería en piedra arenisca colonial">
+  <rect width="800" height="600" fill="#E3D7BF"/>
+  <rect x="26" y="26" width="748" height="548" fill="none" stroke="#5A4832" stroke-width="2"/>
+  <!-- Cartela pétrea labrada -->
+  <rect x="160" y="145" width="480" height="300" fill="#EAE0CA" stroke="#6E5B40" stroke-width="3"/>
+  <rect x="184" y="169" width="432" height="252" fill="none" stroke="#9E7B2F" stroke-width="1.5"/>
+  <circle cx="198" cy="183" r="6" fill="#7C5D24"/>
+  <circle cx="602" cy="183" r="6" fill="#7C5D24"/>
+  <circle cx="198" cy="407" r="6" fill="#7C5D24"/>
+  <circle cx="602" cy="407" r="6" fill="#7C5D24"/>
+  <text x="400" y="270" text-anchor="middle" font-family="serif" font-size="28" fill="#3D3020" letter-spacing="5">ANNO DOMINI · MDLVI</text>
+  <text x="400" y="315" text-anchor="middle" font-family="serif" font-size="18" fill="#63513A" letter-spacing="3">ORDO PRAEDICATORUM · TUNJA</text>
+  <line x1="270" y1="345" x2="530" y2="345" stroke="#9E7B2F" stroke-width="1.5"/>
+  <text x="54" y="64" font-family="monospace" font-size="13" fill="#7A2320" letter-spacing="2">LÁMINA ARQ-03 · EPIGRAFÍA Y CANTERÍA EN PIEDRA ARENISCA</text>
+  <text x="54" y="548" font-family="serif" font-size="15" fill="#2A1D15">Sillares labrados a cincel en cantera regional boyacense</text>
+</svg>

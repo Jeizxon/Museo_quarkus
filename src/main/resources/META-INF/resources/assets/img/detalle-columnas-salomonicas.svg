@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Detalle de columnas salomónicas talladas con vides y pan de oro">
+  <rect width="800" height="600" fill="#331B14"/>
+  <rect x="26" y="26" width="748" height="548" fill="none" stroke="#C9A858" stroke-width="2"/>
+  <!-- Fustes helicoidales salomónicos -->
+  <g stroke="#E0C070" stroke-width="3" fill="none">
+    <path d="M 260 110 C 310 160, 210 210, 260 260 C 310 310, 210 360, 260 410 C 310 460, 210 490, 260 510"/>
+    <path d="M 300 110 C 350 160, 250 210, 300 260 C 350 310, 250 360, 300 410 C 350 460, 250 490, 300 510"/>
+    <path d="M 500 110 C 550 160, 450 210, 500 260 C 550 310, 450 360, 500 410 C 550 460, 450 490, 500 510"/>
+    <path d="M 540 110 C 590 160, 490 210, 540 260 C 590 310, 490 360, 540 410 C 590 460, 490 490, 540 510"/>
+  </g>
+  <rect x="220" y="85" width="120" height="25" fill="#9E7B2F" stroke="#F6F2E8" stroke-width="1"/>
+  <rect x="460" y="85" width="120" height="25" fill="#9E7B2F" stroke="#F6F2E8" stroke-width="1"/>
+  <text x="54" y="64" font-family="monospace" font-size="13" fill="#E0C070" letter-spacing="2">LÁMINA DET-01 · COLUMNAS SALOMÓNICAS Y RACIMOS EUCARÍSTICOS</text>
+  <text x="54" y="548" font-family="serif" font-size="15" fill="#F6F2E8">Talla barroca en madera de cedro con motivos vegetales y dorados</text>
+</svg>

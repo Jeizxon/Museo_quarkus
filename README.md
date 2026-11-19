@@ -1,86 +1,61 @@
-# Sistema de Administración de Museos - API REST en Quarkus y MySQL (XAMPP)
+# Sistema de Administración de Museos — Portal Patrimonial, Quarkus y MySQL (XAMPP)
 
 ## Descripción general
 
-El **Sistema de Administración de Museos** es una aplicación backend y API REST desarrollada para la gestión integral de museos, salas de exposición, colecciones de obras de arte, artistas, categorías, historial de traslados y recorridos guiados, inspirada en instituciones culturales como el **Museo Nacional de Colombia** y el **Museo del Oro**.
+El **Sistema de Administración de Museos** es una aplicación web y API REST desarrollada con **Quarkus 3.6**, **Java** y **MySQL / MariaDB (XAMPP)** que integra dos entornos dentro de una misma arquitectura:
 
-El sistema permite registrar, consultar y administrar toda la información museográfica mediante servicios web RESTful construidos con **Quarkus 3.6**, **RESTEasy Reactive (JAX-RS)**, inyección de dependencias **CDI (ArC)** y una base de datos en **MySQL / MariaDB (XAMPP)**, permitiendo que los datos y cambios realizados desde la API se almacenen y actualicen en la base de datos. Además, incorpora documentación interactiva mediante **Swagger UI (OpenAPI)** y aplica principios fundamentales de **Programación Orientada a Objetos (POO)**.
+1. **Portal Institucional y Patrimonial (Iglesia de Santo Domingo de Tunja):** sitio web en **HTML5 + CSS3 modular + JavaScript Vanilla** con diseño editorial en cedro oscuro, pan de oro y rojo almagre, galería interactiva y acceso directo al área administrativa desde el botón **Admin** en la barra de navegación.
+2. **Panel de Administración de Museos (`/admin.html`):** interfaz oscura coherente con el sistema de diseño del portal, equipada con un **Sidebar tipo Icon Rail con Hover Flyouts**, 8 módulos independientes, formularios modales CRUD, filtros en tiempo real, línea de tiempo de traslados y sincronización en vivo con **Quarkus (`/api/datos`)** y **MySQL (`sistema_museos` en XAMPP)**.
+
+Todos los cambios realizados desde la interfaz web (altas, ediciones, eliminaciones, traslados de obras y orden de recorridos) se persisten directamente en las tablas de **MySQL** y pueden consultarse de inmediato en **phpMyAdmin (XAMPP)** y **Swagger UI**.
 
 ---
 
 ## Objetivo del proyecto
 
-El objetivo principal del proyecto es construir un sistema estructurado y escalable que permita centralizar y organizar la información de colecciones culturales y museográficas, facilitando el control del inventario de obras, su ubicación por salas, el seguimiento de su estado de conservación y la planeación de recorridos guiados.
+El objetivo principal del proyecto es construir un sistema integral y modular que centralice la gestión museográfica de museos, salas de exposición, catálogo de obras, artistas, categorías, historial de exhibición y recorridos guiados, aplicando principios de **Programación Orientada a Objetos (POO)**, arquitectura RESTful en **Quarkus** y persistencia relacional en **MySQL (XAMPP)**.
 
-El sistema busca simular una herramienta institucional donde los datos puedan ser consultados, registrados, validados y reportados de manera organizada y persistente en **MySQL (XAMPP)**.
+El sistema simula una plataforma institucional real donde tanto el visitante (portal patrimonial) como el curador/administrador (panel administrativo) disponen de una experiencia visual coherente, clara y conectada a base de datos.
 
 ---
 
 ## Funcionalidades principales
 
-### Gestión de Museos
+### Portal Institucional y Acceso Administrativo
 
-El módulo de museos permite administrar las sedes o instituciones registradas en el sistema, incluyendo:
+- Sitio multipágina (`index.html`, `iglesia.html`, `patrimonio.html`, `galeria.html`, `actualidad.html`, `visita.html`, `museo.html`) servido directamente por Quarkus en `http://localhost:8080`.
+- Botón diferenciado **Admin** en la esquina superior derecha de la barra de navegación para ingresar al Panel de Administración (`/admin.html`), y acción **Volver al sitio** dentro del panel para regresar al portal.
 
-- Identificador único autogenerado.
-- Nombre oficial y descripción institucional.
-- Coordenadas geográficas validadas (latitud entre `-90` y `90`, longitud entre `-180` y `180`).
-- Enlace al sitio web oficial.
-- Lista de salas de exposición asociadas y cálculo automático de la capacidad total de aforo del museo.
+### Panel de Administración (8 módulos con Sidebar *Icon Rail + Hover Flyouts*)
 
-### Salas de Exposición
-
-La sección de salas permite organizar los espacios físicos dentro de cada museo:
-
-- Registro de salas vinculadas directamente a un museo existente (relación de composición).
-- Validación para evitar nombres de salas duplicados dentro del mismo museo.
-- Control de capacidad máxima de personas por sala (mayor a cero).
-
-### Obras de Arte e Historial de Exhibición
-
-El módulo de obras permite gestionar el catálogo artístico y arqueológico junto con su trazabilidad:
-
-- Nombre, descripción, URL de imagen, categoría y artista (con soporte para obras de autor **Anónimo**).
-- Validación de coherencia cronológica entre fecha de creación y fecha de adquisición.
-- Registro automático del primer ingreso a sala en el historial de exhibición.
-- Traslado de obras entre salas (`PUT /obras/{id}/mover`), cerrando automáticamente el periodo de exhibición anterior y abriendo uno nuevo con fecha y hora tanto en el sistema como en MySQL.
-
-### Artistas y Categorías
-
-Permite catalogar a los autores y clasificar las piezas de la colección:
-
-- **Artistas:** registro de nombre completo, nacionalidad y biografía.
-- **Categorías:** clasificación temática o técnica (por ejemplo: *Pintura*, *Escultura*, *Orfebrería prehispánica*), evitando duplicidad de nombres.
-
-### Recorridos Guiados
-
-El sistema permite planificar itinerarios culturales para visitantes:
-
-- Nombre, descripción, página web, fecha de inicio y fecha de finalización validada.
-- Cálculo automático del estado del recorrido según la fecha actual:
-  - **Próximo:** antes de la fecha de inicio.
-  - **Activo:** durante el rango de fechas programado.
-  - **Finalizado:** después de la fecha de cierre.
-- Administración dinámica del itinerario de salas: agregar salas, cambiar el orden de visita y retirar salas renumerando automáticamente las posiciones.
+- **Inicio (Dashboard):** muestra 6 indicadores en tiempo real (Museos, Salas, Objetos, Artistas, Conservación promedio `%` y Recorridos activos), lista prioritaria de **Objetos que necesitan restauración (`< 60%`)**, indicador en vivo de conexión (`Quarkus + MySQL activo`) y accesos directos a **Swagger UI** y **phpMyAdmin**.
+- **Museos:** búsqueda en tiempo real, tarjetas con descripción, conteo de salas y objetos, coordenadas geográficas con enlace directo a **Google Maps**, sitio web oficial y CRUD completo (validando integridad si sus salas están en uso).
+- **Salas de exposición:** filtro por museo, buscador por nombre, barra proporcional de aforo máximo, conteo de obras y recorridos, y CRUD con validación de nombres duplicados dentro del mismo museo.
+- **Objetos (Catálogo de piezas):** búsqueda por nombre o artista, filtros combinados por **Categoría**, **Museo** y **Estado de conservación**, barras de conservación por color, fechas de creación/adquisición validadas, ubicación actual, acceso directo al historial de la pieza y registro automático en historial al crear o cambiar de sala.
+- **Categorías:** búsqueda en tiempo real y tabla curatorial con conteo de objetos asociados, validación de nombres únicos y protección contra eliminación si posee obras vinculadas.
+- **Artistas:** búsqueda por nombre o nacionalidad, biografía, listado de obras asociadas y gestión CRUD (al eliminar un artista, sus obras pasan automáticamente a **Anónimo**, respetando `ON DELETE SET NULL`).
+- **Historial de exhibición:** filtro por objeto, **línea de tiempo visual** por pieza, tabla cronológica con cálculo de días de permanencia y modal **Trasladar objeto** (cierra la estancia anterior y abre una nueva validando sala destino y fecha).
+- **Recorridos guiados:** cálculo automático de estado (**Próximo**, **Activo**, **Finalizado**), visualización de itinerarios ordenados y modal interactivo para agregar, subir (`↑`), bajar (`↓`) y quitar (`×`) salas en el recorrido.
+- **Restaurar datos de ejemplo:** botón en el pie del sidebar para restablecer la semilla inicial en la interfaz y en MySQL.
 
 ### Estados de Conservación
 
-Cada obra cuenta con un porcentaje de conservación (`0` a `100`) a partir del cual el sistema determina automáticamente su estado y emite una recomendación técnica:
+Cada obra posee un porcentaje de conservación (`0` a `100`) a partir del cual el sistema clasifica automáticamente su estado y recomendación técnica:
 
 | Rango | Estado | Recomendación |
 |---|---|---|
-| `80% – 100%` | **Óptimo** | Puede seguir en exhibición normalmente |
+| `80% – 100%` | **Buen estado / Óptimo** | Puede seguir en exhibición normalmente |
 | `60% – 79%` | **Regular** | Programar una revisión en los próximos meses |
-| `0% – 59%` | **Crítico** | Retirar a restauración lo antes posible |
+| `0% – 59%` | **En riesgo / Crítico** | Retirar a restauración lo antes posible |
 
-### Reportes Administrativos
+### Reportes Administrativos (API REST)
 
-El módulo de reportes consolida indicadores clave del sistema:
+El backend en Quarkus expone reportes consolidados en JSON consultables desde **Swagger UI**:
 
-- Listado detallado de obras con su artista, categoría, sala actual, museo, porcentaje y estado de conservación.
-- Promedio de conservación calculado por cada sala de exposición que contiene obras.
-- Agrupación de obras clasificadas por estado de conservación (`Óptimo`, `Regular`, `Crítico`) junto con su recomendación.
-- Reporte general polimórfico que unifica museos, obras y recorridos guiados bajo la interfaz `Reportable`.
+- Listado detallado de obras con artista, categoría, sala actual, museo y conservación (`/reportes/obras`).
+- Promedio de conservación por sala (`/reportes/conservacion`).
+- Agrupación de obras por estado de conservación (`/reportes/estados`).
+- Reporte general polimórfico mediante la interfaz `Reportable` (`/reportes/general`).
 
 ---
 
@@ -88,14 +63,14 @@ El módulo de reportes consolida indicadores clave del sistema:
 
 | Tecnología | Uso |
 |---|---|
-| Java 17+ | Lenguaje principal del proyecto |
-| Quarkus 3.6.0 | Framework principal para el desarrollo del backend |
-| MySQL / MariaDB (XAMPP) | Motor de base de datos relacional |
-| SQL | Creación, consulta y manipulación de datos |
-| RESTEasy Reactive | Exposición de endpoints RESTful con soporte JSON (Jackson) |
-| Quarkus ArC (CDI) | Inyección de dependencias y gestión del ciclo de vida (`@ApplicationScoped`) |
-| SmallRye OpenAPI | Generación de especificación OpenAPI y consola interactiva Swagger UI |
-| Maven | Gestión del proyecto, compilación y dependencias |
+| Java 17 / 21 | Lenguaje principal del backend |
+| Quarkus 3.6.0 | Framework principal (API REST + servidor web estático) |
+| RESTEasy Reactive (JAX-RS) | Exposición de servicios RESTful con Jackson JSON |
+| Quarkus ArC (CDI) | Inyección de dependencias (`@ApplicationScoped`) |
+| SmallRye OpenAPI / Swagger UI | Documentación y pruebas interactivas de la API |
+| MySQL / MariaDB (XAMPP) | Motor de base de datos relacional (`sistema_museos`) |
+| HTML5 + CSS3 + JavaScript Vanilla | Portal institucional y Panel Admin modular sin frameworks pesados |
+| Maven | Gestión del proyecto, compilación y ejecución |
 | Visual Studio Code | Editor de código utilizado |
 | GitHub | Publicación y control de versiones |
 
@@ -103,18 +78,16 @@ El módulo de reportes consolida indicadores clave del sistema:
 
 ## Librerías y dependencias principales
 
-El proyecto utiliza Maven para administrar las dependencias necesarias.
-
-Dependencias principales:
+El proyecto utiliza Maven para administrar sus dependencias:
 
 - `quarkus-resteasy-reactive-jackson`
 - `quarkus-arc`
 - `quarkus-smallrye-openapi`
-- `mysql-connector-j` (MySQL JDBC Driver)
+- `mysql-connector-j` (MySQL JDBC Driver `8.3.0`)
 - `quarkus-maven-plugin`
 - `maven-compiler-plugin`
 
-Estas dependencias se encuentran configuradas en el archivo:
+Todas se encuentran configuradas en el archivo:
 
 ```text
 pom.xml
@@ -132,18 +105,18 @@ Nombre de la base de datos:
 sistema_museos
 ```
 
-La base de datos contiene las siguientes tablas:
+Tablas del esquema relacional:
 
-- `museo` (Museos registrados y su ubicación geográfica).
-- `sala_exposicion` (Salas asociadas a cada museo y su capacidad).
-- `categoria` (Categorías de las piezas de arte).
-- `artista` (Autores registrados en el sistema).
-- `obra` (Catálogo de obras con porcentaje y estado de conservación).
+- `museo` (Museos registrados, coordenadas geográficas y sitio web).
+- `sala_exposicion` (Salas asociadas a cada museo y capacidad de aforo).
+- `categoria` (Clasificación temática/técnica de las piezas).
+- `artista` (Autores, nacionalidad y biografía).
+- `obra` (Catálogo de piezas, conservación y relaciones con categoría, artista y sala actual).
 - `historial_exhibicion` (Trazabilidad de entradas y salidas de obras por sala).
-- `recorrido_guiado` (Recorridos programados con fechas de inicio y fin).
-- `detalle_recorrido_sala` (Orden de visita de salas dentro de cada recorrido).
+- `recorrido_guiado` (Recorridos programados con fecha de inicio y fin).
+- `detalle_recorrido_sala` (Orden secuencial de salas dentro de cada recorrido).
 
-El script SQL para **XAMPP / phpMyAdmin** se encuentra en la carpeta:
+El script SQL completo con la creación de tablas y datos iniciales de prueba se encuentra en:
 
 ```text
 database/museo_xampp_mysql.sql
@@ -154,16 +127,28 @@ database/museo_xampp_mysql.sql
 ## Estructura del proyecto
 
 ```text
-museo-java/
+Museo_quarkus/
 ├── database/
 │   └── museo_xampp_mysql.sql
+│
+├── docs/
+│   └── screenshots/
+│       ├── portal_inicio.png
+│       ├── admin_inicio.png
+│       ├── admin_sidebar_flyout.png
+│       ├── admin_museos.png
+│       ├── admin_salas.png
+│       ├── admin_objetos.png
+│       ├── admin_categorias.png
+│       ├── admin_artistas.png
+│       ├── admin_historial.png
+│       └── admin_recorridos.png
 │
 ├── src/
 │   └── main/
 │       ├── java/
 │       │   ├── config/
 │       │   │   └── ConexionBD.java
-│       │   │
 │       │   ├── dto/
 │       │   │   ├── AgregarSalaRequest.java
 │       │   │   ├── CambiarOrdenRequest.java
@@ -174,7 +159,6 @@ museo-java/
 │       │   │   ├── RegistrarMuseoRequest.java
 │       │   │   ├── RegistrarObraRequest.java
 │       │   │   └── RegistrarSalaRequest.java
-│       │   │
 │       │   ├── modelo/
 │       │   │   ├── Artista.java
 │       │   │   ├── Categoria.java
@@ -187,27 +171,113 @@ museo-java/
 │       │   │   ├── RecorridoGuiado.java
 │       │   │   ├── Reportable.java
 │       │   │   └── SalaExposicion.java
-│       │   │
 │       │   ├── resource/
 │       │   │   ├── ArtistaResource.java
 │       │   │   ├── CategoriaResource.java
 │       │   │   ├── ErrorMapper.java
+│       │   │   ├── EstadoWebResource.java
 │       │   │   ├── MuseoResource.java
 │       │   │   ├── ObraResource.java
 │       │   │   ├── RecorridoResource.java
 │       │   │   ├── ReporteResource.java
 │       │   │   └── SalaResource.java
-│       │   │
 │       │   └── servicio/
 │       │       └── SistemaMuseoService.java
 │       │
 │       └── resources/
-│           └── application.properties
+│           ├── application.properties
+│           └── META-INF/
+│               └── resources/
+│                   ├── index.html
+│                   ├── iglesia.html
+│                   ├── patrimonio.html
+│                   ├── galeria.html
+│                   ├── actualidad.html
+│                   ├── visita.html
+│                   ├── museo.html
+│                   ├── admin.html
+│                   ├── assets/img/
+│                   ├── css/
+│                   │   ├── tokens.css
+│                   │   ├── base.css
+│                   │   ├── layout.css
+│                   │   ├── components.css
+│                   │   ├── skeuomorphism.css
+│                   │   ├── pages.css
+│                   │   ├── main.css
+│                   │   └── admin.css
+│                   └── js/
+│                       ├── main.js
+│                       ├── chroma-waves.js
+│                       ├── scroll-animations.js
+│                       ├── gallery-lightbox.js
+│                       ├── contact-form.js
+│                       └── admin/
+│                           ├── admin-datos.js
+│                           ├── admin-registry.js
+│                           ├── admin-store.js
+│                           ├── admin-modals.js
+│                           ├── admin-app.js
+│                           └── sections/
+│                               ├── inicio.js
+│                               ├── museos.js
+│                               ├── salas.js
+│                               ├── objetos.js
+│                               ├── categorias.js
+│                               ├── artistas.js
+│                               ├── historial.js
+│                               └── recorridos.js
 │
 ├── iniciar.bat
+├── mvn.cmd
 ├── pom.xml
+├── .gitignore
 └── README.md
 ```
+
+---
+
+## Capturas del proyecto
+
+### Portal Institucional y acceso Admin
+
+![Portal Institucional](docs/screenshots/portal_inicio.png)
+
+### Panel de Administración — Inicio (Dashboard)
+
+![Panel Admin Inicio](docs/screenshots/admin_inicio.png)
+
+### Navegación lateral — Icon Rail con Hover Flyout
+
+![Sidebar Hover Flyout](docs/screenshots/admin_sidebar_flyout.png)
+
+### Gestión de Museos
+
+![Gestión de Museos](docs/screenshots/admin_museos.png)
+
+### Salas de Exposición
+
+![Salas de Exposición](docs/screenshots/admin_salas.png)
+
+### Catálogo de Objetos y Conservación
+
+![Catálogo de Objetos](docs/screenshots/admin_objetos.png)
+
+### Gestión de Categorías
+
+![Gestión de Categorías](docs/screenshots/admin_categorias.png)
+
+### Registro de Artistas
+
+![Registro de Artistas](docs/screenshots/admin_artistas.png)
+
+### Historial de Exhibición y Línea de Tiempo
+
+![Historial de Exhibición](docs/screenshots/admin_historial.png)
+
+### Recorridos Guiados
+
+![Recorridos Guiados](docs/screenshots/admin_recorridos.png)
 
 ---
 
@@ -215,6 +285,8 @@ museo-java/
 
 | Módulo | Método y Ruta | Descripción |
 |---|---|---|
+| **Web / Sync** | `GET /api/datos` | Obtiene el estado completo del sistema desde MySQL (`mysql_conectado`) |
+| **Web / Sync** | `PUT /api/datos` | Persiste y sincroniza los cambios del panel web en las 8 tablas de MySQL |
 | **Museos** | `GET /museos` | Lista todos los museos registrados |
 | **Museos** | `GET /museos/{id}` | Consulta un museo por su identificador |
 | **Museos** | `POST /museos` | Registra un nuevo museo |
@@ -248,10 +320,10 @@ museo-java/
 
 Antes de ejecutar el proyecto, se recomienda tener instalado:
 
-- **Java JDK 17** o superior.
-- **Apache Maven 3.8+**.
-- **XAMPP** (con los servicios **Apache** y **MySQL** activos).
-- **Visual Studio Code** o un IDE compatible con Java.
+- **Java JDK 17** o superior (probado con JDK 21).
+- **Apache Maven 3.9+**.
+- **XAMPP** (con **MySQL / MariaDB** y **Apache** para **phpMyAdmin**).
+- Navegador web moderno y Visual Studio Code (opcional).
 
 ---
 
@@ -259,15 +331,8 @@ Antes de ejecutar el proyecto, se recomienda tener instalado:
 
 ### 1. Descargar o clonar el repositorio
 
-Si el proyecto está en GitHub, se puede clonar con:
-
 ```bash
 git clone https://github.com/Jeizxon/Museo_quarkus.git
-```
-
-Luego entrar a la carpeta del proyecto:
-
-```bash
 cd Museo_quarkus
 ```
 
@@ -275,40 +340,46 @@ También se puede descargar el repositorio como archivo `.zip` desde GitHub y de
 
 ---
 
-### 2. Iniciar XAMPP y cargar la base de datos en phpMyAdmin
+### 2. Iniciar MySQL y Apache en XAMPP
 
-1. Abrir el **XAMPP Control Panel** e iniciar los módulos **Apache** y **MySQL** (*Start*).
-2. Entrar desde el navegador a **phpMyAdmin**:
+Abrir **XAMPP Control Panel** e iniciar:
 
-```text
-http://localhost/phpmyadmin
-```
+- **Apache** (necesario para abrir phpMyAdmin).
+- **MySQL** (puerto `3306`, motor donde se guardarán los datos).
 
-3. Ir a la pestaña **SQL** o **Importar**, abrir el archivo:
+---
+
+### 3. Crear la base de datos e importar el script SQL
+
+1. Abrir **phpMyAdmin** en `http://localhost/phpmyadmin`.
+2. Ir a la pestaña **Importar** (o abrir la pestaña **SQL**).
+3. Seleccionar el archivo:
 
 ```text
 database/museo_xampp_mysql.sql
 ```
 
-4. Ejecutar el script para crear automáticamente la base de datos `sistema_museos` con sus 8 tablas y los registros iniciales de prueba.
+4. Ejecutar la importación. Esto creará automáticamente la base de datos `sistema_museos`, las 8 tablas relacionales y los registros iniciales de prueba.
 
 ---
 
-### 3. Configurar la conexión a MySQL (XAMPP)
+### 4. Verificar la configuración de conexión a MySQL
 
-Abrir el archivo:
+El archivo de conexión JDBC se encuentra en:
 
 ```text
 src/main/java/config/ConexionBD.java
 ```
 
-La aplicación está configurada por defecto para conectarse al servidor MySQL de XAMPP en el puerto `3306` con el usuario `root` sin contraseña:
+Configuración por defecto (compatible con XAMPP estándar):
 
 ```java
 jdbc:mysql://localhost:3306/sistema_museos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+Usuario: root
+Contraseña: "" (vacía)
 ```
 
-También se puede personalizar la conexión sin editar código mediante variables de entorno:
+También puede personalizarse sin editar el código mediante las variables de entorno:
 
 ```text
 MUSEO_DB_URL
@@ -318,84 +389,63 @@ MUSEO_DB_PASSWORD
 
 ---
 
-### 4. Ejecutar el proyecto
+### 5. Ejecutar el servidor Quarkus
 
-Desde la terminal ubicada en la carpeta raíz del proyecto, ejecutar:
+Desde la carpeta raíz del proyecto, puedes iniciar el sistema de dos maneras:
+
+- **Opción rápida en Windows:** hacer doble clic en `iniciar.bat`.
+- **Opción desde terminal:**
 
 ```bash
 mvn quarkus:dev
 ```
 
-O en Windows haciendo doble clic directamente sobre el archivo:
-
-```text
-iniciar.bat
-```
-
 ---
 
-### 5. Consultar la API y Swagger UI
+### 6. Abrir la aplicación en el navegador
 
-Una vez iniciada la aplicación, se puede acceder desde el navegador a las siguientes rutas:
+Una vez iniciado Quarkus en el puerto `8080`, accede a:
 
-| Recurso | URL |
+| Servicio | URL |
 |---|---|
-| Consola interactiva **Swagger UI** | `http://localhost:8080/swagger-ui` |
-| Panel **phpMyAdmin (XAMPP)** | `http://localhost/phpmyadmin` |
-| URL Base de la API | `http://localhost:8080` |
-| Especificación OpenAPI | `http://localhost:8080/q/openapi` |
-
----
-
-## Datos de prueba incluidos
-
-Tanto el script `database/museo_xampp_mysql.sql` como el sistema incluyen los siguientes datos iniciales:
-
-| ID | Obra | Artista | Categoría | Sala Actual | Conservación | Estado |
-|---|---|---|---|---|---|---|
-| `1` | Violencia | Alejandro Obregón | Pintura | Sala Arte Moderno | `92%` | Óptimo |
-| `2` | Masacre del 9 de abril | Débora Arango | Pintura | Sala Memoria y Nación | `58%` | Crítico |
-| `3` | Mona Lisa | Fernando Botero | Pintura | Sala de Exposiciones Temporales | `88%` | Óptimo |
-| `4` | Mujer reclinada | Fernando Botero | Escultura | Sala Arte Moderno | `95%` | Óptimo |
-| `5` | Poporo Quimbaya | Anónimo | Orfebrería prehispánica | Sala El Trabajo de los Metales | `97%` | Óptimo |
-| `6` | Balsa Muisca | Anónimo | Orfebrería prehispánica | Sala La Ofrenda | `90%` | Óptimo |
-| `7` | Pectoral Calima | Anónimo | Orfebrería prehispánica | Sala Cosmología y Simbolismo | `47%` | Crítico |
+| **Portal Principal** | `http://localhost:8080` |
+| **Panel de Administración** | `http://localhost:8080/admin.html` |
+| **Swagger UI (API REST)** | `http://localhost:8080/swagger-ui` |
+| **phpMyAdmin (XAMPP)** | `http://localhost/phpmyadmin` |
 
 ---
 
 ## Notas importantes
 
-- Se recomienda tener **MySQL activo en XAMPP** antes de registrar o trasladar obras para que los cambios se reflejen en tiempo real en `sistema_museos` desde **phpMyAdmin**.
-- La base de datos se llama `sistema_museos`.
-- Todas las validaciones de negocio devuelven un mensaje claro en formato `{"error": "..."}` con código HTTP `400 Bad Request`.
-- La interfaz visual recomendada para probar todos los endpoints frente al docente es **Swagger UI** (`http://localhost:8080/swagger-ui`).
+- Para que los cambios del Panel de Administración se reflejen en las tablas de **phpMyAdmin**, el módulo **MySQL** en XAMPP debe estar encendido; cuando esté activo, la barra superior del panel mostrará el indicador verde **`Quarkus + MySQL activo`**.
+- Si MySQL está temporalmente apagado, el panel lo avisará con el indicador **`Quarkus activo · MySQL apagado`** y conservará los cambios en memoria/respaldo local hasta que MySQL vuelva a iniciarse.
+- Las capturas de pantalla se almacenan en `docs/screenshots/` para renderizarse automáticamente en GitHub.
+- El botón **Restaurar datos de ejemplo** al pie del sidebar permite volver rápidamente al estado inicial del script SQL.
 
 ---
 
 ## Posibles errores comunes
 
-### Error de conexión a MySQL en XAMPP
+### El indicador muestra "Quarkus activo · MySQL apagado"
 
 Verificar:
 
-- Que el servicio **MySQL** esté en verde (*Running*) en el panel de control de **XAMPP**.
-- Que la base de datos `sistema_museos` exista en `http://localhost/phpmyadmin`.
-- Que el puerto de MySQL sea `3306` y el usuario sea `root` en `ConexionBD.java`.
+- Que **MySQL** esté iniciado en **XAMPP Control Panel** (puerto `3306`).
+- Que la base de datos `sistema_museos` haya sido importada desde `database/museo_xampp_mysql.sql`.
+- Que el usuario y contraseña en `src/main/java/config/ConexionBD.java` coincidan con tu instalación de XAMPP (`root` sin contraseña por defecto).
 
-### El puerto 8080 ya está en uso
+### Puerto 8080 en uso al iniciar Quarkus
 
-Verificar que no haya otra instancia corriendo en el puerto `8080`, o cambiar el puerto en `src/main/resources/application.properties`:
+Cerrar cualquier instancia previa de Quarkus o proceso Java que esté usando el puerto `8080`, o cambiar `quarkus.http.port` en `src/main/resources/application.properties`.
 
-```properties
-quarkus.http.port=8081
-```
+### Maven no se reconoce como comando
+
+Verificar que `mvn` esté agregado al `PATH` del sistema o ejecutar el proyecto usando `iniciar.bat` / `mvn.cmd`.
 
 ---
 
 ## Estado del proyecto
 
-Proyecto académico.
+Proyecto académico funcional.
 
-La API REST en Quarkus se encuentra conectada a MySQL (XAMPP) y permite consultar, registrar, trasladar y generar reportes sobre museos, salas de exposición, artistas, categorías, obras de arte y recorridos guiados.
-
----
+El portal patrimonial y el Panel de Administración se encuentran completamente integrados en **Quarkus** y conectados a **MySQL (XAMPP)**, permitiendo gestionar en vivo museos, salas, obras, categorías, artistas, historial de exhibición y recorridos guiados.

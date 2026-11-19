@@ -1,0 +1,537 @@
+/* ==========================================================================
+   SISTEMA DE DISEÑO — IGLESIA DE SANTO DOMINGO DE TUNJA (FASE 1)
+   Archivo: css/components.css
+   Propósito: Migas de pan, etiquetas institucionales ("Contenido de ejemplo",
+              "Museo virtual próximamente"), patrones de formulario accesible,
+              estados de interfaz (skeleton, empty, error) y modal Lightbox.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. MIGAS DE PAN (BREADCRUMBS) Y ENCABEZADOS DE PÁGINA INTERNA
+   -------------------------------------------------------------------------- */
+.page-masthead {
+  padding-block: var(--space-10) var(--space-12);
+  background-color: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border-medium);
+}
+
+.breadcrumbs {
+  margin-bottom: var(--space-5);
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink-muted);
+}
+
+.breadcrumbs__list li {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.breadcrumbs__list li + li::before {
+  content: "/";
+  color: var(--color-material-gold);
+}
+
+.breadcrumbs__link {
+  color: var(--color-ink-secondary);
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .breadcrumbs__link:hover {
+    color: var(--color-accent-almagre);
+    text-decoration: underline;
+  }
+}
+
+.page-masthead__grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: var(--space-8);
+  align-items: end;
+}
+
+.page-masthead__lead {
+  font-size: var(--text-lg);
+  color: var(--color-ink-secondary);
+  max-width: 60ch;
+  margin: 0;
+}
+
+.page-masthead__meta {
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--color-material-gold);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   2. SELLOS Y ETIQUETAS VISUALES OBLIGATORIAS
+   -------------------------------------------------------------------------- */
+/* Etiqueta clara obligatoria: "Contenido de ejemplo" (Actualidad) */
+.badge-example {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-accent-almagre);
+  background-color: var(--color-accent-almagre-soft);
+  border: 1px solid rgba(122, 35, 32, 0.42);
+  border-radius: var(--radius-xs);
+}
+
+.badge-example::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent-almagre);
+}
+
+/* Sello destacado obligatorio: "Museo virtual próximamente" */
+.badge-upcoming {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-on-dark);
+  background-color: var(--color-accent-almagre);
+  border: 1px solid var(--color-material-gold-bright);
+  border-radius: var(--radius-xs);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Etiqueta de verificación documental / imagen autorizada */
+.badge-doc {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.2rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-secondary);
+  background-color: rgba(227, 216, 193, 0.65);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-xs);
+}
+
+/* --------------------------------------------------------------------------
+   3. LISTAS CON DIVISORES ARQUITECTÓNICOS (Anti-Card Overuse)
+   -------------------------------------------------------------------------- */
+.ledger-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-border-medium);
+}
+
+.ledger-list__item {
+  margin: 0;
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--color-border-hairline);
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+.ledger-list__term {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-accent-almagre);
+  font-weight: 500;
+}
+
+.ledger-list__detail {
+  color: var(--color-ink-secondary);
+  font-size: var(--text-base);
+}
+
+/* --------------------------------------------------------------------------
+   4. FORMULARIOS Y ESTADOS INTERACTIVOS (Reglas 5 y 6 design-taste-frontend)
+   Label encima del input, helper text en markup, error debajo, gap de 8px.
+   -------------------------------------------------------------------------- */
+.form-stack {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.form-row-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* Estándar estricto gap-2 (8px) */
+}
+
+.field-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink-primary);
+}
+
+.field-label__req {
+  color: var(--color-accent-almagre);
+  margin-left: 2px;
+}
+
+.field-control {
+  width: 100%;
+  min-height: 2.95rem;
+  padding: var(--space-3) var(--space-4);
+  background-color: #FCF9F2;
+  border: 1px solid #B8A88D;
+  border-radius: var(--radius-xs);
+  color: var(--color-ink-primary);
+  box-shadow: inset 0 2px 4px rgba(34, 24, 15, 0.07);
+  transition: border-color var(--duration-ui) ease, box-shadow var(--duration-ui) ease;
+}
+
+textarea.field-control {
+  min-height: 8.5rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.field-control:focus {
+  outline: none;
+  border-color: var(--color-accent-almagre);
+  box-shadow:
+    inset 0 2px 4px rgba(34, 24, 15, 0.05),
+    0 0 0 3px rgba(122, 35, 32, 0.16);
+}
+
+.field-control[aria-invalid="true"] {
+  border-color: var(--color-state-error);
+  background-color: var(--color-state-error-bg);
+}
+
+.field-hint {
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+
+.field-error {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--color-state-error);
+  min-height: 1.1em;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.field-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.field-checkbox input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 0.2rem;
+  accent-color: var(--color-accent-almagre);
+  flex-shrink: 0;
+}
+
+.field-label--regular {
+  font-weight: 400;
+}
+
+.mt-space-2 {
+  margin-top: var(--space-2);
+}
+
+.mt-space-4 {
+  margin-top: var(--space-4);
+}
+
+.mb-space-5 {
+  margin-bottom: var(--space-5);
+}
+
+.museum-notice-box__title {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   6. ANIMACIONES DE APARICIÓN Y SCROLL REVEAL SOLEMNE (0.6s – 0.9s)
+   - Textos Hero (index.html): fade-in up escalonado con @keyframes
+   - Bloques de texto y accesos: fade-in up progresivo con IntersectionObserver
+   - Fotografías (Inicio, Iglesia, Patrimonio, Galería): opacidad 0->1 +
+     translateY(16px) + scale(0.98)->scale(1) con cubic-bezier(0.22, 1, 0.36, 1)
+   -------------------------------------------------------------------------- */
+@keyframes solemnFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-stagger-1,
+.hero-stagger-2,
+.hero-stagger-3,
+.hero-stagger-4 {
+  opacity: 0;
+  animation: solemnFadeInUp var(--duration-reveal-text) var(--ease-solemn) forwards;
+}
+
+.hero-stagger-1 {
+  animation-delay: 60ms;
+}
+
+.hero-stagger-2 {
+  animation-delay: 170ms;
+}
+
+.hero-stagger-3 {
+  animation-delay: 280ms;
+}
+
+.hero-stagger-4 {
+  animation-delay: 390ms;
+}
+
+/* Estados iniciales para Scroll Reveal gobernados por IntersectionObserver */
+.js-motion-ready [data-reveal="text"] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--duration-reveal-text) var(--ease-solemn),
+    transform var(--duration-reveal-text) var(--ease-solemn);
+  will-change: opacity, transform;
+}
+
+.js-motion-ready [data-reveal="image"] {
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition:
+    opacity var(--duration-reveal-image) var(--ease-solemn),
+    transform var(--duration-reveal-image) var(--ease-solemn);
+  will-change: opacity, transform;
+}
+
+.js-motion-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Estados de aviso, éxito, carga (skeleton) y estado vacío */
+.status-banner {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-xs);
+  border-left: 4px solid var(--color-material-gold);
+  background-color: var(--color-bg-surface);
+  font-size: var(--text-sm);
+  color: var(--color-ink-primary);
+}
+
+.status-banner--success {
+  border-left-color: var(--color-state-success);
+  background-color: var(--color-state-success-bg);
+  color: var(--color-state-success);
+}
+
+.status-banner--error {
+  border-left-color: var(--color-state-error);
+  background-color: var(--color-state-error-bg);
+  color: var(--color-state-error);
+}
+
+.status-banner[hidden],
+.empty-state-ledger[hidden] {
+  display: none;
+}
+
+.empty-state-ledger {
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  border: 1px dashed var(--color-border-strong);
+  background-color: var(--color-bg-surface);
+}
+
+.empty-state-ledger p {
+  margin-inline: auto;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #EAE1CE 25%,
+    #F5EFE1 50%,
+    #EAE1CE 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* --------------------------------------------------------------------------
+   5. MODAL / LIGHTBOX ACCESIBLE (<dialog>) PARA GALERÍA FOTOGRÁFICA
+   -------------------------------------------------------------------------- */
+.lightbox-modal {
+  padding: 0;
+  border: 0;
+  max-width: min(980px, 94vw);
+  width: 100%;
+  background: transparent;
+  color: var(--color-ink-on-dark);
+  overflow: visible;
+}
+
+.lightbox-modal::backdrop {
+  background-color: rgba(18, 12, 8, 0.86);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox-modal[open] .lightbox-modal__shell {
+  animation: lightboxEnter var(--duration-modal) var(--ease-out-strong) forwards;
+}
+
+@keyframes lightboxEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96); /* Nunca desde scale(0) */
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lightbox-modal__shell {
+  position: relative;
+}
+
+.lightbox-modal__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.lightbox-modal__counter {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-material-gold-bright);
+}
+
+.lightbox-modal__close {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.85rem;
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-bg-cedar);
+  color: var(--color-ink-on-dark);
+  border: 1px solid var(--color-material-gold-bright);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  box-shadow: 0 3px 0 #100A06;
+  transition: transform var(--duration-press) var(--ease-out-strong);
+}
+
+.lightbox-modal__close:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 3px;
+}
+
+.lightbox-modal__close:active {
+  transform: translateY(2px) scale(0.98);
+}
+
+.lightbox-modal__figure-wrap {
+  aspect-ratio: 16 / 10;
+  max-height: 64svh;
+  width: 100%;
+  background-color: #1A120D;
+}
+
+.lightbox-modal__figure-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lightbox-modal__info {
+  margin-top: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-bg-cedar);
+  border: 1px solid var(--color-border-gold);
+  border-radius: var(--radius-xs);
+}
+
+.lightbox-modal__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--color-ink-on-dark);
+  margin-bottom: var(--space-2);
+}
+
+.lightbox-modal__desc {
+  font-size: var(--text-sm);
+  color: var(--color-ink-on-dark-muted);
+  max-width: 75ch;
+  margin-bottom: var(--space-2);
+}
+
+.lightbox-modal__credit {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-material-gold-bright);
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .page-masthead__grid,
+  .form-row-two,
+  .ledger-list__item {
+    grid-template-columns: 1fr;
+  }
+
+  .page-masthead__meta {
+    padding-left: var(--space-4);
+  }
+}

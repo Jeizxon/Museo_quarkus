@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Lámina arquitectónica de la portada renacentista de la Iglesia de Santo Domingo de Tunja">
+  <defs>
+    <linearGradient id="bgStone" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EDE4D0"/>
+      <stop offset="55%" stop-color="#DFD2B8"/>
+      <stop offset="100%" stop-color="#CBB998"/>
+    </linearGradient>
+    <linearGradient id="archGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C9A858"/>
+      <stop offset="100%" stop-color="#7B5D22"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bgStone)"/>
+  <!-- Cuadrícula de sillería colonial -->
+  <g stroke="#B8A686" stroke-width="1" opacity="0.45">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="0" y1="500" x2="800" y2="500"/>
+    <line x1="160" y1="0" x2="160" y2="600"/>
+    <line x1="320" y1="0" x2="320" y2="600"/>
+    <line x1="480" y1="0" x2="480" y2="600"/>
+    <line x1="640" y1="0" x2="640" y2="600"/>
+  </g>
+  <!-- Marco de lámina -->
+  <rect x="28" y="28" width="744" height="544" fill="none" stroke="#5A4832" stroke-width="2"/>
+  <rect x="36" y="36" width="728" height="528" fill="none" stroke="#9E7B2F" stroke-width="1"/>
+  <!-- Frontón y portada renacentista -->
+  <polygon points="400,78 210,168 590,168" fill="#D5C5A6" stroke="#3F3122" stroke-width="2.5"/>
+  <rect x="225" y="168" width="350" height="36" fill="#C7B491" stroke="#3F3122" stroke-width="2"/>
+  <!-- Columnas estriadas laterales -->
+  <rect x="242" y="204" width="38" height="316" fill="#E6DCC6" stroke="#3F3122" stroke-width="2"/>
+  <rect x="520" y="204" width="38" height="316" fill="#E6DCC6" stroke="#3F3122" stroke-width="2"/>
+  <!-- Arco de medio punto en piedra tallada -->
+  <path d="M 295 520 L 295 340 A 105 105 0 0 1 505 340 L 505 520 Z" fill="#2A1D15" stroke="url(#archGold)" stroke-width="4"/>
+  <path d="M 312 520 L 312 345 A 88 88 0 0 1 488 345 L 488 520 Z" fill="#3A271C" stroke="#9E7B2F" stroke-width="1.5"/>
+  <line x1="400" y1="255" x2="400" y2="520" stroke="#9E7B2F" stroke-width="2"/>
+  <!-- Rosetón dominico superior -->
+  <circle cx="400" cy="132" r="22" fill="#7A2320" stroke="#C9A858" stroke-width="2"/>
+  <circle cx="400" cy="132" r="10" fill="none" stroke="#F6F2E8" stroke-width="1.5"/>
+  <!-- Basamento -->
+  <rect x="180" y="520" width="440" height="24" fill="#B5A17E" stroke="#3F3122" stroke-width="2"/>
+  <!-- Cartela documental -->
+  <text x="56" y="66" font-family="monospace" font-size="13" fill="#7A2320" letter-spacing="2">LÁMINA ARQ-01 · PORTADA RENACENTISTA (S. XVI)</text>
+  <text x="56" y="550" font-family="serif" font-size="15" fill="#3F3122">Iglesia de Santo Domingo de Tunja — Alzado esquemático de fachada en piedra arenisca</text>
+</svg>

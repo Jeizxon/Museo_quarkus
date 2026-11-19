@@ -1,0 +1,16 @@
+/* ==========================================================================
+   HOJA DE ESTILOS PRINCIPAL — IGLESIA DE SANTO DOMINGO DE TUNJA (FASE 1)
+   Archivo: css/main.css
+   Propósito: Punto de entrada único conectado a las 7 páginas HTML.
+              Orquesta la arquitectura modular del sistema de diseño mediante
+              CSS Cascade Layers (@layer) para garantizar especificidad limpia.
+   ========================================================================== */
+
+@layer tokens, base, layout, skeuomorphism, components, pages;
+
+@import url("./tokens.css") layer(tokens);
+@import url("./base.css") layer(base);
+@import url("./layout.css") layer(layout);
+@import url("./skeuomorphism.css") layer(skeuomorphism);
+@import url("./components.css") layer(components);
+@import url("./pages.css") layer(pages);

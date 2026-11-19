@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Lámina de la techumbre mudéjar y lacería geométrica del siglo XVI">
+  <rect width="800" height="600" fill="#2B1D14"/>
+  <rect x="26" y="26" width="748" height="548" fill="none" stroke="#C9A858" stroke-width="2"/>
+  <!-- Lacería mudéjar geométrica -->
+  <g stroke="#B68F3C" stroke-width="1.8" fill="none" opacity="0.85">
+    <rect x="130" y="90" width="540" height="410"/>
+    <rect x="160" y="120" width="480" height="350"/>
+    <polygon points="400,120 560,295 400,470 240,295"/>
+    <polygon points="400,155 520,295 400,435 280,295" stroke="#E2C375"/>
+    <circle cx="400" cy="295" r="56" fill="#7A2320" stroke="#E2C375" stroke-width="2.5"/>
+    <circle cx="235" cy="190" r="32" stroke="#C9A858"/>
+    <circle cx="565" cy="190" r="32" stroke="#C9A858"/>
+    <circle cx="235" cy="400" r="32" stroke="#C9A858"/>
+    <circle cx="565" cy="400" r="32" stroke="#C9A858"/>
+  </g>
+  <text x="54" y="64" font-family="monospace" font-size="13" fill="#E2C375" letter-spacing="2">LÁMINA PAT-02 · ARTESONADO MUDÉJAR DE PAR Y NUDILLO</text>
+  <text x="54" y="548" font-family="serif" font-size="15" fill="#F6F2E8">Esquema geométrico de carpintería de lo blanco y florones policromados (s. XVI)</text>
+</svg>

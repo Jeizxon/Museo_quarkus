@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Perspectiva de la nave central y arcos torales del templo">
+  <rect width="800" height="600" fill="#EFE7D5"/>
+  <rect x="26" y="26" width="748" height="548" fill="none" stroke="#4A3B2A" stroke-width="2"/>
+  <!-- Arcos concéntricos en perspectiva -->
+  <path d="M 110 520 L 110 290 A 290 220 0 0 1 690 290 L 690 520" fill="#E3D7BF" stroke="#4A3B2A" stroke-width="2.5"/>
+  <path d="M 185 520 L 185 315 A 215 175 0 0 1 615 315 L 615 520" fill="#D5C5A6" stroke="#7A2320" stroke-width="2"/>
+  <path d="M 260 520 L 260 340 A 140 130 0 0 1 540 340 L 540 520" fill="#2A1D15" stroke="#9E7B2F" stroke-width="2.5"/>
+  <line x1="80" y1="520" x2="720" y2="520" stroke="#2A1D15" stroke-width="3"/>
+  <text x="54" y="64" font-family="monospace" font-size="13" fill="#7A2320" letter-spacing="2">LÁMINA ARQ-02 · NAVE CENTRAL Y ARCOS TORALES</text>
+  <text x="54" y="548" font-family="serif" font-size="15" fill="#2A1D15">Disposición basilical de tres naves: Central, del Evangelio y de la Epístola</text>
+</svg>

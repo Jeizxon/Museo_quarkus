@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es" class="admin-html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#18100C">
+  <meta name="description" content="Museos — Panel de administración conectado a Quarkus y MySQL (XAMPP) para gestionar museos, salas, objetos, categorías, artistas, historial y recorridos.">
+  <title>Inicio | Museos — Panel de administración</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body class="admin-body">
+  <a class="skip-link" href="#admin-view-root">Saltar al contenido del panel</a>
+
+  <div class="admin-shell">
+    <!-- App Sidebar 2: Icon Rail con Hover Flyouts adaptado al sistema de diseño -->
+    <aside id="admin-rail" class="admin-rail" aria-label="Navegación del Panel de Administración de Museos">
+      <div class="rail-header">
+        <div class="rail-brand-item" data-flyout-host>
+          <button
+            type="button"
+            class="rail-brand-trigger"
+            data-nav-target="inicio"
+            aria-label="Museos — Panel de administración. Ir a Inicio"
+          >
+            <span class="rail-brand-emblem" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M8.5 11.5h7"/>
+                <path d="M12 8v7"/>
+              </svg>
+            </span>
+            <span class="rail-brand-copy">
+              <span class="rail-brand-title">Museos</span>
+              <span class="rail-brand-subtitle">Panel de administración</span>
+            </span>
+          </button>
+
+          <div class="rail-flyout rail-flyout--top" role="region" aria-label="Identificación del panel">
+            <div class="rail-flyout__eyebrow">
+              <span>Quarkus + MySQL</span>
+              <span>XAMPP</span>
+            </div>
+            <p class="rail-flyout__title">Museos — Panel de administración</p>
+            <p class="rail-flyout__desc">
+              Sistema administrativo conectado a la API REST en Quarkus y la base de datos MySQL sistema_museos.
+            </p>
+            <div class="rail-flyout__meta">
+              <span class="rail-flyout__status">8 módulos activos</span>
+              <span>Modo Icon Rail</span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          id="rail-pin-btn"
+          type="button"
+          class="rail-pin-btn"
+          aria-expanded="false"
+          aria-label="Expandir barra lateral con etiquetas"
+          title="Expandir sidebar"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </button>
+
+        <button
+          id="rail-mobile-close"
+          type="button"
+          class="rail-mobile-close"
+          aria-label="Cerrar menú lateral"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menú principal de 8 secciones generado desde los módulos independientes -->
+      <nav class="rail-nav" aria-label="Secciones del panel de administración">
+        <span class="rail-section-label">Gestión patrimonial</span>
+        <ul id="admin-rail-list" class="rail-list"></ul>
+      </nav>
+
+      <!-- Acciones secundarias al pie del Sidebar -->
+      <div class="rail-footer" aria-label="Acciones secundarias del panel">
+        <div class="rail-item" data-flyout-host>
+          <a
+            href="./index.html"
+            class="rail-btn rail-btn--return"
+            aria-label="Volver al sitio principal"
+          >
+            <span class="rail-btn__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </span>
+            <span class="rail-btn__label">Volver al sitio</span>
+          </a>
+
+          <div class="rail-flyout rail-flyout--bottom" role="region" aria-label="Volver al sitio">
+            <div class="rail-flyout__eyebrow">
+              <span>Portal Público</span>
+              <span>index.html</span>
+            </div>
+            <p class="rail-flyout__title">Volver al sitio</p>
+            <p class="rail-flyout__desc">
+              Regresar a la página principal del portal institucional de la Iglesia de Santo Domingo de Tunja.
+            </p>
+          </div>
+        </div>
+
+        <div class="rail-item" data-flyout-host>
+          <button
+            id="btn-restaurar-datos"
+            type="button"
+            class="rail-btn rail-btn--restore"
+            aria-label="Restaurar datos de ejemplo en el panel y MySQL"
+          >
+            <span class="rail-btn__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </span>
+            <span class="rail-btn__label">Restaurar datos de ejemplo</span>
+          </button>
+
+          <div class="rail-flyout rail-flyout--bottom" role="region" aria-label="Restaurar datos de ejemplo">
+            <div class="rail-flyout__eyebrow">
+              <span>Semilla MySQL</span>
+              <span>sistema_museos</span>
+            </div>
+            <p class="rail-flyout__title">Restaurar datos de ejemplo</p>
+            <p class="rail-flyout__desc">
+              Restablece los registros iniciales de ejemplo y sincroniza inmediatamente con Quarkus y MySQL (XAMPP).
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Área de contenido principal del Workspace -->
+    <div class="admin-workspace">
+      <header class="admin-topbar">
+        <div class="admin-topbar__left">
+          <button
+            id="admin-mobile-trigger"
+            type="button"
+            class="admin-mobile-trigger"
+            aria-expanded="false"
+            aria-controls="admin-rail"
+            aria-label="Abrir navegación del panel"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 7h16"/>
+              <path d="M4 12h16"/>
+              <path d="M4 17h16"/>
+            </svg>
+          </button>
+
+          <div class="admin-topbar__brand">
+            <p class="admin-topbar__title">Museos — Panel de administración</p>
+            <span class="admin-topbar__sep" aria-hidden="true">/</span>
+            <span id="admin-topbar-crumb" class="admin-topbar__crumb">01 · Inicio</span>
+          </div>
+        </div>
+
+        <div class="admin-topbar__right">
+          <button
+            id="admin-db-pill"
+            type="button"
+            class="admin-db-pill"
+            title="Clic para sincronizar con Quarkus y MySQL (XAMPP)"
+          >
+            <span class="admin-db-pill__dot" aria-hidden="true"></span>
+            <span id="admin-db-pill-text">Conectando con Quarkus...</span>
+          </button>
+          <a class="admin-topbar__site-link" href="./index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+            <span>Volver al sitio</span>
+          </a>
+        </div>
+      </header>
+
+      <main id="admin-view-root" class="admin-main" tabindex="-1">
+        <noscript>
+          <div class="admin-panel">
+            <div class="admin-empty-state">
+              <h1 class="admin-empty-state__title">JavaScript requerido</h1>
+              <p class="admin-empty-state__text">
+                Activa JavaScript en tu navegador para cargar el Panel de Administración de Museos.
+              </p>
+            </div>
+          </div>
+        </noscript>
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= MODALES CRUD (ESTILO CEDRO Y PAN DE ORO) ================= -->
+
+  <dialog id="modal-museo" class="admin-dialog">
+    <form id="form-museo" class="admin-dialog__form">
+      <header class="admin-dialog__header">
+        <div>
+          <span class="admin-dialog__eyebrow">Entidad · museo</span>
+          <h2 id="titulo-museo" class="admin-dialog__title">Nuevo museo</h2>
+        </div>
+        <button type="button" class="admin-dialog__close cerrar-modal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="admin-form-grid">
+        <div class="admin-field admin-field--full">
+          <label for="museo-nombre">Nombre *</label>
+          <input type="text" id="museo-nombre" required>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="museo-descripcion">Descripción</label>
+          <textarea id="museo-descripcion" rows="3"></textarea>
+        </div>
+        <div class="admin-field">
+          <label for="museo-latitud">Latitud (-90 a 90)</label>
+          <input type="number" id="museo-latitud" step="any" min="-90" max="90" placeholder="Ej. 4.615556">
+        </div>
+        <div class="admin-field">
+          <label for="museo-longitud">Longitud (-180 a 180)</label>
+          <input type="number" id="museo-longitud" step="any" min="-180" max="180" placeholder="Ej. -74.068889">
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="museo-url">Página web</label>
+          <input type="url" id="museo-url" placeholder="https://">
+        </div>
+      </div>
+      <footer class="admin-dialog__footer">
+        <button type="button" class="admin-btn admin-btn--ghost cerrar-modal">Cancelar</button>
+        <button type="submit" class="admin-btn admin-btn--primary">Guardar museo</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-sala" class="admin-dialog">
+    <form id="form-sala" class="admin-dialog__form">
+      <header class="admin-dialog__header">
+        <div>
+          <span class="admin-dialog__eyebrow">Entidad · sala_exposicion</span>
+          <h2 id="titulo-sala" class="admin-dialog__title">Nueva sala</h2>
+        </div>
+        <button type="button" class="admin-dialog__close cerrar-modal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="admin-form-grid">
+        <div class="admin-field admin-field--full">
+          <label for="sala-museo">Museo *</label>
+          <select id="sala-museo" required></select>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="sala-nombre">Nombre *</label>
+          <input type="text" id="sala-nombre" required>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="sala-descripcion">Descripción</label>
+          <textarea id="sala-descripcion" rows="3"></textarea>
+        </div>
+        <div class="admin-field">
+          <label for="sala-capacidad">Aforo (personas) *</label>
+          <input type="number" id="sala-capacidad" min="1" required>
+        </div>
+      </div>
+      <footer class="admin-dialog__footer">
+        <button type="button" class="admin-btn admin-btn--ghost cerrar-modal">Cancelar</button>
+        <button type="submit" class="admin-btn admin-btn--primary">Guardar sala</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-objeto" class="admin-dialog admin-dialog--wide">
+    <form id="form-objeto" class="admin-dialog__form">
+      <header class="admin-dialog__header">
+        <div>
+          <span class="admin-dialog__eyebrow">Entidad · obra</span>
+          <h2 id="titulo-objeto" class="admin-dialog__title">Nuevo objeto</h2>
+        </div>
+        <button type="button" class="admin-dialog__close cerrar-modal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="admin-form-grid">
+        <div class="admin-field admin-field--full">
+          <label for="objeto-nombre">Nombre *</label>
+          <input type="text" id="objeto-nombre" required>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="objeto-descripcion">Descripción</label>
+          <textarea id="objeto-descripcion" rows="2"></textarea>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="objeto-imagen">URL de la imagen</label>
+          <input type="url" id="objeto-imagen" placeholder="https://">
+        </div>
+        <div class="admin-field">
+          <label for="objeto-creacion">Fecha de creación</label>
+          <input type="date" id="objeto-creacion">
+        </div>
+        <div class="admin-field">
+          <label for="objeto-adquisicion">Fecha de adquisición</label>
+          <input type="date" id="objeto-adquisicion">
+        </div>
+        <div class="admin-field">
+          <label for="objeto-conservacion">Conservación (%) *</label>
+          <input type="number" id="objeto-conservacion" min="0" max="100" required>
+        </div>
+        <div class="admin-field">
+          <label for="objeto-categoria">Categoría *</label>
+          <select id="objeto-categoria" required></select>
+        </div>
+        <div class="admin-field">
+          <label for="objeto-artista">Artista</label>
+          <select id="objeto-artista"></select>
+        </div>
+        <div class="admin-field">
+          <label for="objeto-sala">Sala actual *</label>
+          <select id="objeto-sala" required></select>
+        </div>
+      </div>
+      <footer class="admin-dialog__footer">
+        <button type="button" class="admin-btn admin-btn--ghost cerrar-modal">Cancelar</button>
+        <button type="submit" class="admin-btn admin-btn--primary">Guardar objeto</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-categoria" class="admin-dialog">
+    <form id="form-categoria" class="admin-dialog__form">
+      <header class="admin-dialog__header">
+        <div>
+          <span class="admin-dialog__eyebrow">Entidad · categoria</span>
+          <h2 id="titulo-categoria" class="admin-dialog__title">Nueva categoría</h2>
+        </div>
+        <button type="button" class="admin-dialog__close cerrar-modal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="admin-form-grid">
+        <div class="admin-field admin-field--full">
+          <label for="categoria-nombre">Nombre *</label>
+          <input type="text" id="categoria-nombre" required>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="categoria-descripcion">Descripción</label>
+          <textarea id="categoria-descripcion" rows="3"></textarea>
+        </div>
+      </div>
+      <footer class="admin-dialog__footer">
+        <button type="button" class="admin-btn admin-btn--ghost cerrar-modal">Cancelar</button>
+        <button type="submit" class="admin-btn admin-btn--primary">Guardar categoría</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-artista" class="admin-dialog">
+    <form id="form-artista" class="admin-dialog__form">
+      <header class="admin-dialog__header">
+        <div>
+          <span class="admin-dialog__eyebrow">Entidad · artista</span>
+          <h2 id="titulo-artista" class="admin-dialog__title">Nuevo artista</h2>
+        </div>
+        <button type="button" class="admin-dialog__close cerrar-modal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="admin-form-grid">
+        <div class="admin-field admin-field--full">
+          <label for="artista-nombre">Nombre *</label>
+          <input type="text" id="artista-nombre" required>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="artista-nacionalidad">Nacionalidad</label>
+          <input type="text" id="artista-nacionalidad">
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="artista-biografia">Biografía</label>
+          <textarea id="artista-biografia" rows="4"></textarea>
+        </div>
+      </div>
+      <footer class="admin-dialog__footer">
+        <button type="button" class="admin-btn admin-btn--ghost cerrar-modal">Cancelar</button>
+        <button type="submit" class="admin-btn admin-btn--primary">Guardar artista</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-traslado" class="admin-dialog">
+    <form id="form-traslado" class="admin-dialog__form">
+      <header class="admin-dialog__header">
+        <div>
+          <span class="admin-dialog__eyebrow">Entidad · historial_exhibicion</span>
+          <h2 class="admin-dialog__title">Trasladar objeto</h2>
+        </div>
+        <button type="button" class="admin-dialog__close cerrar-modal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="admin-form-grid">
+        <div class="admin-field admin-field--full">
+          <label for="traslado-objeto">Objeto *</label>
+          <select id="traslado-objeto" required></select>
+          <small id="traslado-actual" class="admin-field__hint"></small>
+        </div>
+        <div class="admin-field">
+          <label for="traslado-sala">Sala de destino *</label>
+          <select id="traslado-sala" required></select>
+        </div>
+        <div class="admin-field">
+          <label for="traslado-fecha">Fecha del traslado *</label>
+          <input type="datetime-local" id="traslado-fecha" required>
+        </div>
+      </div>
+      <footer class="admin-dialog__footer">
+        <button type="button" class="admin-btn admin-btn--ghost cerrar-modal">Cancelar</button>
+        <button type="submit" class="admin-btn admin-btn--primary">Confirmar traslado</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-recorrido" class="admin-dialog admin-dialog--wide">
+    <form id="form-recorrido" class="admin-dialog__form">
+      <header class="admin-dialog__header">
+        <div>
+          <span class="admin-dialog__eyebrow">Entidad · recorrido_guiado</span>
+          <h2 id="titulo-recorrido" class="admin-dialog__title">Nuevo recorrido</h2>
+        </div>
+        <button type="button" class="admin-dialog__close cerrar-modal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="admin-form-grid">
+        <div class="admin-field admin-field--full">
+          <label for="recorrido-nombre">Nombre *</label>
+          <input type="text" id="recorrido-nombre" required>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="recorrido-descripcion">Descripción</label>
+          <textarea id="recorrido-descripcion" rows="2"></textarea>
+        </div>
+        <div class="admin-field">
+          <label for="recorrido-inicio">Inicio *</label>
+          <input type="datetime-local" id="recorrido-inicio" required>
+        </div>
+        <div class="admin-field">
+          <label for="recorrido-fin">Fin *</label>
+          <input type="datetime-local" id="recorrido-fin" required>
+        </div>
+        <div class="admin-field admin-field--full">
+          <label for="recorrido-url">Página web</label>
+          <input type="url" id="recorrido-url" placeholder="https://">
+        </div>
+        <div class="admin-field admin-field--full admin-order-box">
+          <label for="recorrido-sala">Salas del recorrido (en orden) *</label>
+          <div class="admin-order-picker">
+            <select id="recorrido-sala"></select>
+            <button type="button" id="btn-agregar-sala-recorrido" class="admin-btn admin-btn--ghost">Agregar sala</button>
+          </div>
+          <ol id="orden-salas" class="admin-order-list"></ol>
+        </div>
+      </div>
+      <footer class="admin-dialog__footer">
+        <button type="button" class="admin-btn admin-btn--ghost cerrar-modal">Cancelar</button>
+        <button type="submit" class="admin-btn admin-btn--primary">Guardar recorrido</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Backdrop para el drawer en dispositivos móviles -->
+  <div id="admin-backdrop" class="admin-backdrop" aria-hidden="true"></div>
+
+  <!-- Notificación sutil para sincronización con Quarkus / MySQL -->
+  <div id="admin-toast" class="admin-toast" role="status" aria-live="polite" aria-atomic="true">
+    <span class="admin-toast__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="5" rx="8" ry="3"/>
+        <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
+        <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/>
+      </svg>
+    </span>
+    <div class="admin-toast__body">
+      <strong id="admin-toast-title">Sincronización MySQL</strong>
+      <span id="admin-toast-message"></span>
+    </div>
+  </div>
+
+  <!-- Arquitectura modular conectada a Quarkus + MySQL (XAMPP) -->
+  <script defer src="./js/admin/admin-datos.js"></script>
+  <script defer src="./js/admin/admin-registry.js"></script>
+  <script defer src="./js/admin/admin-store.js"></script>
+  <script defer src="./js/admin/admin-modals.js"></script>
+  <script defer src="./js/admin/sections/inicio.js"></script>
+  <script defer src="./js/admin/sections/museos.js"></script>
+  <script defer src="./js/admin/sections/salas.js"></script>
+  <script defer src="./js/admin/sections/objetos.js"></script>
+  <script defer src="./js/admin/sections/categorias.js"></script>
+  <script defer src="./js/admin/sections/artistas.js"></script>
+  <script defer src="./js/admin/sections/historial.js"></script>
+  <script defer src="./js/admin/sections/recorridos.js"></script>
+  <script defer src="./js/admin/admin-app.js"></script>
+</body>
+</html>

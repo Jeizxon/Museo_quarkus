@@ -1,0 +1,141 @@
+/* ==========================================================================
+   SISTEMA DE DISEÑO — IGLESIA DE SANTO DOMINGO DE TUNJA (FASE 1)
+   Archivo: css/tokens.css
+   Propósito: Variables globales (paleta calibrada, tipografía, escala
+              espacial, curvas de movimiento, capas z-index y sombras tintadas).
+   Referencia institucional: Jerarquía y sobriedad cromática tipo vatican.va
+   adaptada a los materiales coloniales del templo dominico de Tunja (s. XVI).
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     1. PALETA CROMÁTICA (Tonalidad cálida unificada — Piedra, Papel y Cedro)
+     Reglas aplicadas:
+     - Cero negro puro (#000000 prohibido -> tinta ferrogálica #1C1815).
+     - Máximo 1 acento cromático primario (Almagre colonial < 80% saturación).
+     - Consistencia térmica: todos los neutros comparten subtono ocre-caliza.
+     ------------------------------------------------------------------------ */
+
+  /* Superficies y fondos */
+  --color-bg-canvas: #F6F2E8;          /* Marfil travertino principal */
+  --color-bg-surface: #FAF7F0;         /* Pliego de papel limpio para lectura */
+  --color-bg-elevated: #EFE8D8;        /* Piedra caliza suave (secciones alternas) */
+  --color-bg-parchment: #F8F3E6;       /* Papel de algodón antiguo (fichas) */
+  --color-bg-sandstone: #E3D8C1;       /* Piedra arenisca de Tunja (reposo) */
+  --color-bg-sandstone-light: #EFE7D6; /* Arista iluminada de piedra tallada */
+  --color-bg-sandstone-deep: #CFC0A3;  /* Sombra mineral de sillar */
+  --color-bg-cedar: #231913;           /* Madera de cedro oscuro (Header/Footer) */
+  --color-bg-cedar-mid: #35251B;       /* Nogal tallado (bastidores y marcos) */
+  --color-bg-cedar-deep: #18110D;      /* Sombra profunda de talla en madera */
+
+  /* Tintas tipográficas */
+  --color-ink-primary: #1C1815;        /* Tinta ferrogálica (Contraste > 15:1) */
+  --color-ink-secondary: #4A4035;      /* Sepia documental (Contraste > 8.5:1) */
+  --color-ink-muted: #66594B;          /* Piedra ceniza cálida (Metadatos/Créditos) */
+  --color-ink-on-dark: #F7F2E6;        /* Marfil sobre madera oscura */
+  --color-ink-on-dark-muted: #CBBFA9;  /* Arena suave sobre madera oscura */
+
+  /* Acento único institucional y materiales nobles (Saturación < 60%) */
+  --color-accent-almagre: #7A2320;       /* Rojo almagre Capilla del Rosario (HSL 2°, 58%, 30%) */
+  --color-accent-almagre-strong: #5E1A18;/* Almagre profundo de presión/énfasis */
+  --color-accent-almagre-soft: #F2E4E1;  /* Fondo suave para sellos y etiquetas */
+  --color-material-gold: #9E7B2F;        /* Pan de oro envejecido (HSL 41°, 54%, 40%) */
+  --color-material-gold-bright: #CCA95A; /* Reflejo especular de laminilla dorada */
+  --color-material-gold-shadow: #6B511B; /* Incisión oscura en bronce/oro */
+
+  /* Estados semánticos de interfaz */
+  --color-state-error: #8C2622;
+  --color-state-error-bg: #F9ECEA;
+  --color-state-success: #285438;
+  --color-state-success-bg: #E9F2EC;
+
+  /* Bordes y filetes */
+  --color-border-hairline: rgba(74, 64, 53, 0.18);
+  --color-border-medium: rgba(74, 64, 53, 0.30);
+  --color-border-strong: rgba(74, 64, 53, 0.46);
+  --color-border-gold: rgba(158, 123, 47, 0.45);
+  --color-border-on-dark: rgba(247, 242, 230, 0.16);
+
+  /* ------------------------------------------------------------------------
+     2. SISTEMA TIPOGRÁFICO
+     - Editorial / Títulos: 'Cormorant Garamond' (solemnidad epigráfica romana)
+     - Cuerpo / Interfaz: 'Outfit' (alta legibilidad, sin usar Inter)
+     - Catalogación / Fechas / Códigos: 'JetBrains Mono'
+     ------------------------------------------------------------------------ */
+  --font-serif: "Cormorant Garamond", Garamond, "Times New Roman", Georgia, serif;
+  --font-sans: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+
+  /* Escala tipográfica fluida controlada (sin H1 desproporcionados) */
+  --text-xs: 0.75rem;                                /* 12px - Signaturas y sellos */
+  --text-sm: 0.875rem;                               /* 14px - Metadatos y navegación */
+  --text-base: 1rem;                                 /* 16px - Cuerpo base y controles */
+  --text-lg: 1.125rem;                               /* 18px - Entradillas editoriales */
+  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);/* 20px–24px - Subtítulos H3 */
+  --text-2xl: clamp(1.6rem, 1.35rem + 1.1vw, 2.2rem);/* 25.6px–35.2px - Títulos H2 */
+  --text-3xl: clamp(2.05rem, 1.7rem + 1.7vw, 3.1rem);/* 32.8px–49.6px - Título H1 */
+
+  --leading-tight: 1.14;
+  --leading-snug: 1.32;
+  --leading-relaxed: 1.70;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.08em;
+  --tracking-epigraph: 0.14em;
+
+  /* Medida óptima de lectura */
+  --measure-reading: 65ch;
+
+  /* ------------------------------------------------------------------------
+     3. ESPACIADO, CONTENEDORES Y PROPORCIONES
+     ------------------------------------------------------------------------ */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+
+  --container-max: 1320px;
+  --container-narrow: 980px;
+  --header-height: 4.75rem;
+
+  /* Radios arquitectónicos sobrios (no burbujas SaaS) */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+
+  /* ------------------------------------------------------------------------
+     4. SOMBRAS TINTADAS AL HUE OCRE/UMBER Y CURVAS DE MOVIMIENTO
+     ------------------------------------------------------------------------ */
+  --shadow-ambient-sm: 0 2px 6px -1px rgba(34, 24, 15, 0.10);
+  --shadow-ambient-md: 0 12px 26px -8px rgba(34, 24, 15, 0.17);
+  --shadow-ambient-lg: 0 24px 48px -14px rgba(28, 20, 12, 0.26);
+
+  /* Curvas físicas y transiciones solemnes (0.6s a 0.9s con cubic-bezier suave) */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-solemn: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-press: 130ms;
+  --duration-ui: 210ms;
+  --duration-modal: 280ms;
+  --duration-reveal-text: 0.72s;
+  --duration-reveal-image: 0.84s;
+
+  /* ------------------------------------------------------------------------
+     5. CAPAS SISTÉMICAS Z-INDEX (Restricción estricta)
+     ------------------------------------------------------------------------ */
+  --z-base: 1;
+  --z-elevated: 10;
+  --z-sticky: 100;
+  --z-drawer: 200;
+  --z-modal: 300;
+  --z-grain: 400;
+}

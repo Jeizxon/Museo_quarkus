@@ -2,432 +2,408 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administración de Museos</title>
-  <link rel="stylesheet" href="css/estilos.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#231913">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#18110D">
+  <meta name="description" content="Portal institucional y patrimonial de la Iglesia de Santo Domingo de Tunja (Boyacá, Colombia). Historia verificada del siglo XVI, arquitectura hispano-mudéjar, Capilla del Rosario y visita.">
+  <title>Inicio | Iglesia de Santo Domingo de Tunja</title>
+
+  <!-- Librería externa documentada en LIBRERIAS.md: Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Hoja de estilos principal conectada -->
+  <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
 
-  <div class="app">
-    <!-- menu lateral -->
-    <aside class="lateral">
-      <div class="marca">
-        <span class="logo">M</span>
-        <div>
-          <h2>Museos</h2>
-          <p>Panel de administración</p>
-        </div>
-      </div>
-
-      <nav>
-        <ul class="menu">
-          <li><button data-seccion="inicio" class="activo">Inicio</button></li>
-          <li><button data-seccion="museos">Museos</button></li>
-          <li><button data-seccion="salas">Salas</button></li>
-          <li><button data-seccion="objetos">Objetos</button></li>
-          <li><button data-seccion="categorias">Categorías</button></li>
-          <li><button data-seccion="artistas">Artistas</button></li>
-          <li><button data-seccion="historial">Historial</button></li>
-          <li><button data-seccion="recorridos">Recorridos</button></li>
-        </ul>
-      </nav>
-
-      <button class="restaurar" onclick="restaurarDatos()">Restaurar datos de ejemplo</button>
-    </aside>
-
-    <main>
-
-      <!-- INICIO -->
-      <section id="inicio" class="seccion activa">
-        <header class="cabecera">
-          <h1>Inicio</h1>
-          <p>Resumen general de la colección.</p>
-        </header>
-        <div class="resumen" id="resumen"></div>
-        <div class="panel">
-          <h2>Objetos que necesitan restauración</h2>
-          <p class="gris">Objetos con menos del 60% de conservación.</p>
-          <ul class="lista-simple" id="lista-riesgo"></ul>
-        </div>
-      </section>
-
-      <!-- MUSEOS -->
-      <section id="museos" class="seccion">
-        <header class="cabecera">
-          <h1>Museos</h1>
-          <p>Museos registrados, su ubicación y página web.</p>
-        </header>
-        <div class="filtros">
-          <div class="filtro">
-            <label for="buscar-museo">Buscar</label>
-            <input type="search" id="buscar-museo" placeholder="Nombre del museo">
-          </div>
-          <button class="boton" onclick="nuevoMuseo()">Nuevo museo</button>
-        </div>
-        <div class="tarjetas" id="lista-museos"></div>
-      </section>
-
-      <!-- SALAS -->
-      <section id="salas" class="seccion">
-        <header class="cabecera">
-          <h1>Salas de exposición</h1>
-          <p>Salas de cada museo con su aforo.</p>
-        </header>
-        <div class="filtros">
-          <div class="filtro">
-            <label for="filtro-sala-museo">Museo</label>
-            <select id="filtro-sala-museo"></select>
-          </div>
-          <div class="filtro">
-            <label for="buscar-sala">Buscar</label>
-            <input type="search" id="buscar-sala" placeholder="Nombre de la sala">
-          </div>
-          <button class="boton" onclick="nuevaSala()">Nueva sala</button>
-        </div>
-        <div class="tarjetas" id="lista-salas"></div>
-      </section>
-
-      <!-- OBJETOS -->
-      <section id="objetos" class="seccion">
-        <header class="cabecera">
-          <h1>Objetos</h1>
-          <p>Catálogo de piezas con su estado de conservación y ubicación actual.</p>
-        </header>
-        <div class="filtros">
-          <div class="filtro">
-            <label for="buscar-objeto">Buscar</label>
-            <input type="search" id="buscar-objeto" placeholder="Nombre o artista">
-          </div>
-          <div class="filtro">
-            <label for="filtro-categoria">Categoría</label>
-            <select id="filtro-categoria"></select>
-          </div>
-          <div class="filtro">
-            <label for="filtro-museo">Museo</label>
-            <select id="filtro-museo"></select>
-          </div>
-          <div class="filtro">
-            <label for="filtro-estado">Conservación</label>
-            <select id="filtro-estado">
-              <option value="">Todos</option>
-              <option value="bueno">Buen estado (80% o más)</option>
-              <option value="regular">Regular (60% a 79%)</option>
-              <option value="riesgo">En riesgo (menos de 60%)</option>
-            </select>
-          </div>
-          <button class="boton" onclick="nuevoObjeto()">Nuevo objeto</button>
-        </div>
-        <p class="contador" id="contador-objetos"></p>
-        <div class="tarjetas" id="lista-objetos"></div>
-      </section>
-
-      <!-- CATEGORIAS -->
-      <section id="categorias" class="seccion">
-        <header class="cabecera">
-          <h1>Categorías</h1>
-          <p>Clasificación de los objetos de la colección.</p>
-        </header>
-        <div class="filtros">
-          <button class="boton" onclick="nuevaCategoria()">Nueva categoría</button>
-        </div>
-        <div class="contenedor-tabla">
-          <table class="tabla">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Objetos</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="tabla-categorias"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ARTISTAS -->
-      <section id="artistas" class="seccion">
-        <header class="cabecera">
-          <h1>Artistas</h1>
-          <p>Autores de las obras, con su biografía y nacionalidad.</p>
-        </header>
-        <div class="filtros">
-          <div class="filtro">
-            <label for="buscar-artista">Buscar</label>
-            <input type="search" id="buscar-artista" placeholder="Nombre o nacionalidad">
-          </div>
-          <button class="boton" onclick="nuevoArtista()">Nuevo artista</button>
-        </div>
-        <div class="tarjetas" id="lista-artistas"></div>
-      </section>
-
-      <!-- HISTORIAL -->
-      <section id="historial" class="seccion">
-        <header class="cabecera">
-          <h1>Historial de exhibición</h1>
-          <p>Salas en las que ha estado cada objeto y en qué fechas.</p>
-        </header>
-        <div class="filtros">
-          <div class="filtro">
-            <label for="filtro-historial">Objeto</label>
-            <select id="filtro-historial"></select>
-          </div>
-          <button class="boton" onclick="abrirTraslado()">Trasladar objeto</button>
-        </div>
-        <div id="linea-tiempo"></div>
-        <div class="contenedor-tabla">
-          <table class="tabla">
-            <thead>
-              <tr>
-                <th>Objeto</th>
-                <th>Sala</th>
-                <th>Museo</th>
-                <th>Inicio</th>
-                <th>Fin</th>
-                <th>Días</th>
-              </tr>
-            </thead>
-            <tbody id="tabla-historial"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- RECORRIDOS -->
-      <section id="recorridos" class="seccion">
-        <header class="cabecera">
-          <h1>Recorridos guiados</h1>
-          <p>Visitas guiadas y el orden en que pasan por las salas.</p>
-        </header>
-        <div class="filtros">
-          <button class="boton" onclick="nuevoRecorrido()">Nuevo recorrido</button>
-        </div>
-        <div class="tarjetas" id="lista-recorridos"></div>
-      </section>
-
-    </main>
+  <!-- Franja institucional superior -->
+  <div class="institutional-topbar" role="region" aria-label="Identificación institucional">
+    <div class="container institutional-topbar__inner">
+      <span class="institutional-topbar__label">
+        <span class="institutional-topbar__dot" aria-hidden="true"></span>
+        Orden de Predicadores · Centro Histórico de Tunja, Boyacá
+      </span>
+      <span class="mono-code">MONUMENTO NACIONAL DE COLOMBIA · LEY 163 DE 1959</span>
+    </div>
   </div>
 
+  <!-- Encabezado y Menú de Navegación Común -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="site-brand" href="./index.html" aria-label="Iglesia de Santo Domingo de Tunja — Ir al inicio">
+        <span class="site-brand__text">
+          <span class="site-brand__title">Iglesia de Santo Domingo</span>
+          <span class="site-brand__subtitle">Tunja · Templo Conventual Dominico</span>
+        </span>
+      </a>
 
-  <!-- ================= MODALES ================= -->
+      <button
+        class="nav-toggle"
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="menu-principal"
+        aria-label="Abrir menú de navegación"
+      >
+        <svg class="nav-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+        <span>Menú</span>
+      </button>
 
-  <dialog id="modal-museo">
-    <form id="form-museo">
-      <h2 id="titulo-museo">Nuevo museo</h2>
-      <div class="campos">
-        <div class="campo completo">
-          <label for="museo-nombre">Nombre *</label>
-          <input type="text" id="museo-nombre" required>
-        </div>
-        <div class="campo completo">
-          <label for="museo-descripcion">Descripción</label>
-          <textarea id="museo-descripcion" rows="3"></textarea>
-        </div>
-        <div class="campo">
-          <label for="museo-latitud">Latitud</label>
-          <input type="number" id="museo-latitud" step="any" min="-90" max="90">
-        </div>
-        <div class="campo">
-          <label for="museo-longitud">Longitud</label>
-          <input type="number" id="museo-longitud" step="any" min="-180" max="180">
-        </div>
-        <div class="campo completo">
-          <label for="museo-url">Página web</label>
-          <input type="url" id="museo-url" placeholder="https://">
-        </div>
-      </div>
-      <div class="botones-modal">
-        <button type="button" class="boton-borde cerrar-modal">Cancelar</button>
-        <button type="submit" class="boton">Guardar</button>
-      </div>
-    </form>
-  </dialog>
+      <nav class="site-nav" id="menu-principal" data-site-nav aria-label="Navegación principal">
+        <ul class="site-nav__list">
+          <li class="site-nav__item">
+            <a class="site-nav__link site-nav__link--active" href="./index.html" aria-current="page">Inicio</a>
+          </li>
+          <li class="site-nav__item">
+            <a class="site-nav__link" href="./iglesia.html">La iglesia</a>
+          </li>
+          <li class="site-nav__item">
+            <a class="site-nav__link" href="./patrimonio.html">Patrimonio</a>
+          </li>
+          <li class="site-nav__item">
+            <a class="site-nav__link" href="./galeria.html">Galería</a>
+          </li>
+          <li class="site-nav__item">
+            <a class="site-nav__link" href="./actualidad.html">Actualidad</a>
+          </li>
+          <li class="site-nav__item">
+            <a class="site-nav__link" href="./visita.html">Visita y contacto</a>
+          </li>
+          <li class="site-nav__item">
+            <a class="site-nav__link" href="./museo.html">Museo virtual</a>
+          </li>
+          <li class="site-nav__item site-nav__item--admin">
+            <a class="site-nav__admin-btn" href="./admin.html" aria-label="Acceder al Panel de Administración de Museos">
+              <svg class="site-nav__admin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9.5 12.2 11.2 14l3.6-3.8"/>
+              </svg>
+              <span>Admin</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-  <dialog id="modal-sala">
-    <form id="form-sala">
-      <h2 id="titulo-sala">Nueva sala</h2>
-      <div class="campos">
-        <div class="campo completo">
-          <label for="sala-museo">Museo *</label>
-          <select id="sala-museo" required></select>
-        </div>
-        <div class="campo completo">
-          <label for="sala-nombre">Nombre *</label>
-          <input type="text" id="sala-nombre" required>
-        </div>
-        <div class="campo completo">
-          <label for="sala-descripcion">Descripción</label>
-          <textarea id="sala-descripcion" rows="3"></textarea>
-        </div>
-        <div class="campo">
-          <label for="sala-capacidad">Aforo (personas) *</label>
-          <input type="number" id="sala-capacidad" min="1" required>
-        </div>
+  <!-- Contenido Principal -->
+  <main id="contenido-principal">
+    <!-- 1. HERO: Nombre del lugar, fotografía real de la fachada colonial y animación escalonada -->
+    <section class="hero-institutional" aria-labelledby="hero-titulo">
+      <!-- Fondo animado exclusivo del Hero: Chroma Waves (React Bits Pro: chroma-waves-tw) -->
+      <div
+        id="chroma-waves-hero"
+        class="chroma-waves"
+        aria-hidden="true"
+        data-color-1="#ffffff"
+        data-color-2="#f69d41"
+        data-bg-color="#0a0806"
+        data-speed="0.5"
+        data-wave-frequency="0.2"
+        data-wave-amplitude="0.3"
+        data-distortion="1.5"
+        data-flatness="0.25"
+        data-noise-level="0.10"
+      >
+        <canvas class="chroma-waves__canvas"></canvas>
       </div>
-      <div class="botones-modal">
-        <button type="button" class="boton-borde cerrar-modal">Cancelar</button>
-        <button type="submit" class="boton">Guardar</button>
-      </div>
-    </form>
-  </dialog>
 
-  <dialog id="modal-objeto">
-    <form id="form-objeto">
-      <h2 id="titulo-objeto">Nuevo objeto</h2>
-      <div class="campos">
-        <div class="campo completo">
-          <label for="objeto-nombre">Nombre *</label>
-          <input type="text" id="objeto-nombre" required>
-        </div>
-        <div class="campo completo">
-          <label for="objeto-descripcion">Descripción</label>
-          <textarea id="objeto-descripcion" rows="2"></textarea>
-        </div>
-        <div class="campo completo">
-          <label for="objeto-imagen">URL de la imagen</label>
-          <input type="url" id="objeto-imagen" placeholder="https://">
-        </div>
-        <div class="campo">
-          <label for="objeto-creacion">Fecha de creación</label>
-          <input type="date" id="objeto-creacion">
-        </div>
-        <div class="campo">
-          <label for="objeto-adquisicion">Fecha de adquisición</label>
-          <input type="date" id="objeto-adquisicion">
-        </div>
-        <div class="campo">
-          <label for="objeto-conservacion">Conservación (%) *</label>
-          <input type="number" id="objeto-conservacion" min="0" max="100" required>
-        </div>
-        <div class="campo">
-          <label for="objeto-categoria">Categoría *</label>
-          <select id="objeto-categoria" required></select>
-        </div>
-        <div class="campo">
-          <label for="objeto-artista">Artista</label>
-          <select id="objeto-artista"></select>
-        </div>
-        <div class="campo">
-          <label for="objeto-sala">Sala actual *</label>
-          <select id="objeto-sala" required></select>
-        </div>
-      </div>
-      <div class="botones-modal">
-        <button type="button" class="boton-borde cerrar-modal">Cancelar</button>
-        <button type="submit" class="boton">Guardar</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="modal-categoria">
-    <form id="form-categoria">
-      <h2 id="titulo-categoria">Nueva categoría</h2>
-      <div class="campos">
-        <div class="campo completo">
-          <label for="categoria-nombre">Nombre *</label>
-          <input type="text" id="categoria-nombre" required>
-        </div>
-        <div class="campo completo">
-          <label for="categoria-descripcion">Descripción</label>
-          <textarea id="categoria-descripcion" rows="3"></textarea>
-        </div>
-      </div>
-      <div class="botones-modal">
-        <button type="button" class="boton-borde cerrar-modal">Cancelar</button>
-        <button type="submit" class="boton">Guardar</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="modal-artista">
-    <form id="form-artista">
-      <h2 id="titulo-artista">Nuevo artista</h2>
-      <div class="campos">
-        <div class="campo completo">
-          <label for="artista-nombre">Nombre *</label>
-          <input type="text" id="artista-nombre" required>
-        </div>
-        <div class="campo completo">
-          <label for="artista-nacionalidad">Nacionalidad</label>
-          <input type="text" id="artista-nacionalidad">
-        </div>
-        <div class="campo completo">
-          <label for="artista-biografia">Biografía</label>
-          <textarea id="artista-biografia" rows="4"></textarea>
-        </div>
-      </div>
-      <div class="botones-modal">
-        <button type="button" class="boton-borde cerrar-modal">Cancelar</button>
-        <button type="submit" class="boton">Guardar</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="modal-traslado">
-    <form id="form-traslado">
-      <h2>Trasladar objeto</h2>
-      <div class="campos">
-        <div class="campo completo">
-          <label for="traslado-objeto">Objeto *</label>
-          <select id="traslado-objeto" required></select>
-          <small id="traslado-actual"></small>
-        </div>
-        <div class="campo">
-          <label for="traslado-sala">Sala de destino *</label>
-          <select id="traslado-sala" required></select>
-        </div>
-        <div class="campo">
-          <label for="traslado-fecha">Fecha del traslado *</label>
-          <input type="datetime-local" id="traslado-fecha" required>
-        </div>
-      </div>
-      <div class="botones-modal">
-        <button type="button" class="boton-borde cerrar-modal">Cancelar</button>
-        <button type="submit" class="boton">Trasladar</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="modal-recorrido">
-    <form id="form-recorrido">
-      <h2 id="titulo-recorrido">Nuevo recorrido</h2>
-      <div class="campos">
-        <div class="campo completo">
-          <label for="recorrido-nombre">Nombre *</label>
-          <input type="text" id="recorrido-nombre" required>
-        </div>
-        <div class="campo completo">
-          <label for="recorrido-descripcion">Descripción</label>
-          <textarea id="recorrido-descripcion" rows="2"></textarea>
-        </div>
-        <div class="campo">
-          <label for="recorrido-inicio">Inicio *</label>
-          <input type="datetime-local" id="recorrido-inicio" required>
-        </div>
-        <div class="campo">
-          <label for="recorrido-fin">Fin *</label>
-          <input type="datetime-local" id="recorrido-fin" required>
-        </div>
-        <div class="campo completo">
-          <label for="recorrido-url">Página web</label>
-          <input type="url" id="recorrido-url" placeholder="https://">
-        </div>
-        <div class="campo completo caja-salas">
-          <label for="recorrido-sala">Salas del recorrido (en orden) *</label>
-          <div class="agregar-sala">
-            <select id="recorrido-sala"></select>
-            <button type="button" class="boton-borde" onclick="agregarSalaRecorrido()">Agregar</button>
+      <div class="container hero-institutional__grid">
+        <div class="hero-institutional__content">
+          <span class="eyebrow hero-stagger-1">Fundación Dominicana · Siglo XVI (1551–1560)</span>
+          <h1
+            id="hero-titulo"
+            class="hero-stagger-2 hero-title-mirror"
+            data-text="Iglesia de Santo Domingo de Tunja"
+          >Iglesia de Santo Domingo de Tunja</h1>
+          <p class="hero-institutional__subtitle hero-stagger-3">
+            Santuario histórico de la Orden de Predicadores en el centro fundacional de Tunja. Su sobria arquitectura exterior de tapia, cal y portada en piedra sillar resguarda tres naves de traza hispano-mudéjar y el conjunto barroco dorado de la Capilla de Nuestra Señora del Rosario.
+          </p>
+          <div class="hero-institutional__actions hero-stagger-4">
+            <!-- Componente Esquemórfico 1 (Interactivo): Placa Epigráfica en Piedra Arenisca -->
+            <a class="skeuo-stone-plaque skeuo-stone-plaque--compact skeuo-stone-plaque--primary" href="./iglesia.html">
+              <span>Conocer la historia del templo</span>
+            </a>
+            <a class="skeuo-stone-plaque skeuo-stone-plaque--compact" href="./visita.html">
+              <span>Planificar visita y contacto</span>
+            </a>
           </div>
-          <ol class="orden-salas" id="orden-salas"></ol>
+        </div>
+
+        <!-- Fotografía real de la fachada colonial en piedra y torre campanario -->
+        <div class="hero-institutional__media" data-reveal="image">
+          <figure class="skeuo-carved-wood-frame">
+            <div class="skeuo-carved-wood-frame__mat">
+              <img
+                class="skeuo-carved-wood-frame__img"
+                src="./assets/img/fachada-santo-domingo-real.jpg"
+                alt="Fotografía exterior de la fachada colonial, portada en piedra sillar y torre campanario de la Iglesia de Santo Domingo sobre la Carrera 11 en Tunja"
+                width="1280"
+                height="960"
+              >
+            </div>
+            <figcaption class="skeuo-carved-wood-frame__caption">
+              <span>Fachada colonial, portada en piedra y torre campanario sobre la Carrera 11</span>
+              <span class="mono-code">Foto: Ivan Tunja · CC BY-SA 3.0 (Wikimedia Commons)</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
-      <div class="botones-modal">
-        <button type="button" class="boton-borde cerrar-modal">Cancelar</button>
-        <button type="submit" class="boton">Guardar</button>
-      </div>
-    </form>
-  </dialog>
+    </section>
 
-  <script src="js/datos.js"></script>
-  <script src="js/app.js"></script>
+    <!-- 2. PRESENTACIÓN BREVE E IMAGEN REAL DE LA NAVE PRINCIPAL -->
+    <section class="section-block section-block--surface" aria-labelledby="presentacion-titulo">
+      <div class="container">
+        <header class="section-header section-header--split" data-reveal="text">
+          <div>
+            <span class="eyebrow">Síntesis Institucional</span>
+            <h2 id="presentacion-titulo">Cuatro siglos de patrimonio hispano-mudéjar y barroco en Boyacá</h2>
+          </div>
+          <p class="mono-code">ORDEN DE PREDICADORES · ARQUIDIÓCESIS DE TUNJA</p>
+        </header>
+
+        <div class="grid-split-editorial">
+          <div data-reveal="text" data-reveal-delay="80">
+            <p class="dropcap-paragraph">
+              Establecido el convento dominico en 1551 e iniciada la obra del templo hacia 1556–1560, el edificio conserva la austeridad exterior propia de los templos conventuales neogranadinos del siglo XVI junto con una extraordinaria riqueza ornamental interna.
+            </p>
+            <p>
+              Su interior se organiza en tres naves separadas por arcos sobre pilares encalados, cubiertas con armaduras de madera de par y nudillo, pinturas murales al temple del siglo XVI y retablos tallados en cedro y recubiertos en hojilla de oro sobre fondos en rojo almagre.
+            </p>
+
+            <!-- Componente Esquemórfico 2: Ficha Capitular de Archivo en Papel Antiguo -->
+            <aside class="skeuo-archive-card mt-space-4" aria-label="Ficha de identificación patrimonial">
+              <div class="skeuo-archive-card__header">
+                <span class="skeuo-archive-card__tab">REGISTRO HISTÓRICO · SD-TUN-1560</span>
+                <span class="skeuo-emboss-seal" aria-hidden="true">O.P.</span>
+              </div>
+              <h3>Datos verificados del monumento</h3>
+              <dl class="ledger-list">
+                <div class="ledger-list__item">
+                  <dt class="ledger-list__term">Ubicación</dt>
+                  <dd class="ledger-list__detail">Carrera 11 entre Calles 19 y 20, Centro Histórico, Tunja, Boyacá.</dd>
+                </div>
+                <div class="ledger-list__item">
+                  <dt class="ledger-list__term">Cronología</dt>
+                  <dd class="ledger-list__detail">Convento fundado en 1551; templo erigido entre 1556 y finales del siglo XVI.</dd>
+                </div>
+                <div class="ledger-list__item">
+                  <dt class="ledger-list__term">Declaratoria</dt>
+                  <dd class="ledger-list__detail">Monumento Nacional de Colombia (Ley 163 de 1959).</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+
+          <!-- Fotografía real de la nave principal del Templo de Santo Domingo -->
+          <figure class="skeuo-carved-wood-frame arch-feature-figure" data-reveal="image" data-reveal-delay="140">
+            <div class="skeuo-carved-wood-frame__mat">
+              <img
+                class="skeuo-carved-wood-frame__img"
+                src="./assets/img/nave-principal-santo-domingo.jpg"
+                alt="Fotografía interior de la nave principal del Templo de Santo Domingo de Tunja con sus arcos laterales y el retablo del presbiterio al fondo"
+                width="1280"
+                height="960"
+                loading="lazy"
+              >
+            </div>
+            <figcaption class="skeuo-carved-wood-frame__caption">
+              <span>Nave principal del Templo de Santo Domingo, arcos laterales y presbiterio</span>
+              <span class="mono-code">Foto: Kamilokardona · CC BY-SA 3.0 (Wikimedia Commons)</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ACCESOS DIRECTOS DESTACADOS: "La iglesia", "Visita y contacto" y "Museo virtual" -->
+    <section class="section-block" aria-labelledby="accesos-titulo">
+      <div class="container">
+        <header class="section-header" data-reveal="text">
+          <span class="eyebrow">Recorrido Estructural del Sitio</span>
+          <h2 id="accesos-titulo">Accesos directos destacados</h2>
+        </header>
+
+        <!-- Grilla asimétrica editorial con animación de aparición escalonada -->
+        <div class="featured-shortcuts">
+          <div class="featured-shortcuts__lead" data-reveal="text" data-reveal-delay="60">
+            <a class="skeuo-stone-plaque skeuo-stone-plaque--primary" href="./iglesia.html">
+              <div>
+                <div class="skeuo-stone-plaque__meta">
+                  <span>SECCIÓN I · HISTORIA Y ARQUITECTURA</span>
+                  <span>FOLIO 01</span>
+                </div>
+                <h3 class="skeuo-stone-plaque__title">La iglesia (Reseña histórica y traza)</h3>
+                <p class="skeuo-stone-plaque__desc">
+                  Consulte la reseña histórica verificada desde 1551, el contexto espiritual y artístico impulsado por Fray Pedro Bedón, la descripción arquitectónica de sus naves y las fuentes documentales consultadas.
+                </p>
+              </div>
+              <span class="skeuo-stone-plaque__cta">
+                <span>Consultar sección histórica</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          <div class="featured-shortcuts__stack">
+            <div data-reveal="text" data-reveal-delay="160">
+              <a class="skeuo-stone-plaque" href="./visita.html">
+                <div>
+                  <div class="skeuo-stone-plaque__meta">
+                    <span>SECCIÓN II · ORIENTACIÓN AL VISITANTE</span>
+                    <span>FOLIO 02</span>
+                  </div>
+                  <h3 class="skeuo-stone-plaque__title">Visita y contacto</h3>
+                  <p class="skeuo-stone-plaque__desc">
+                    Revise la ubicación exacta en la Carrera 11 entre Calles 19 y 20, las indicaciones peatonales desde la Plaza de Bolívar y el formulario de consulta.
+                  </p>
+                </div>
+                <span class="skeuo-stone-plaque__cta">
+                  <span>Ver ubicación y contacto</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+
+            <div data-reveal="text" data-reveal-delay="260">
+              <a class="skeuo-stone-plaque" href="./museo.html">
+                <div>
+                  <div class="skeuo-stone-plaque__meta">
+                    <span>SECCIÓN III · PROYECCIÓN DIGITAL</span>
+                    <span>PRÓXIMAMENTE</span>
+                  </div>
+                  <h3 class="skeuo-stone-plaque__title">Museo virtual</h3>
+                  <p class="skeuo-stone-plaque__desc">
+                    Conozca la presentación editorial y el alcance curatorial del futuro espacio museográfico que se incorporará en una etapa posterior del proyecto.
+                  </p>
+                </div>
+                <span class="skeuo-stone-plaque__cta">
+                  <span>Conocer proyección del museo</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. BLOQUE DE ACTUALIDAD O ACTIVIDADES (Con etiqueta "[Contenido de ejemplo]") -->
+    <section class="section-block section-block--alt" aria-labelledby="actualidad-home-titulo">
+      <div class="container">
+        <header class="section-header section-header--split" data-reveal="text">
+          <div>
+            <span class="eyebrow">Boletín del Templo</span>
+            <h2 id="actualidad-home-titulo">Actualidad y actividades culturales</h2>
+          </div>
+          <div>
+            <a class="skeuo-stone-plaque skeuo-stone-plaque--compact" href="./actualidad.html">
+              <span>Ver todas las publicaciones</span>
+            </a>
+          </div>
+        </header>
+
+        <div class="grid-two-col">
+          <article class="skeuo-archive-card" data-reveal="text" data-reveal-delay="60">
+            <div class="bulletin-meta">
+              <span class="badge-example">[Contenido de ejemplo]</span>
+              <time class="bulletin-date" datetime="2026-11-15">15 de noviembre de 2026</time>
+            </div>
+            <h3>Coloquio sobre conservación de la madera dorada en la Capilla del Rosario</h3>
+            <p>
+              Jornada académica orientada a divulgar los criterios de preservación preventiva de los retablos tallados en cedro y dorados con hojilla de oro del siglo XVII.
+            </p>
+            <p class="mt-space-4">
+              <a href="./actualidad.html">Consultar boletín completo en Actualidad</a>
+            </p>
+          </article>
+
+          <article class="skeuo-archive-card" data-reveal="text" data-reveal-delay="160">
+            <div class="bulletin-meta">
+              <span class="badge-example">[Contenido de ejemplo]</span>
+              <time class="bulletin-date" datetime="2026-11-28">28 de noviembre de 2026</time>
+            </div>
+            <h3>Lectura documental: La Cofradía del Rosario y Fray Pedro Bedón en Tunja</h3>
+            <p>
+              Encuentro cultural sobre el origen histórico de la Cofradía de Nuestra Señora del Rosario a finales del siglo XVI y su legado iconográfico en el templo.
+            </p>
+            <p class="mt-space-4">
+              <a href="./actualidad.html">Consultar boletín completo en Actualidad</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de Página (Footer) Común e Idéntico -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <h2 class="site-footer__heading">Iglesia de Santo Domingo de Tunja</h2>
+          <p class="site-footer__text">
+            Portal documental, histórico y arquitectónico dedicado a la puesta en valor del templo conventual dominico del siglo XVI y su acervo artístico en el Centro Histórico de Tunja, Boyacá, Colombia.
+          </p>
+          <p class="mono-code">SIGNATURA DE PROYECTO · FASE 1 (ESTRUCTURA Y SISTEMA DE DISEÑO)</p>
+        </div>
+
+        <nav aria-label="Navegación del pie de página">
+          <h2 class="site-footer__heading">Mapa del sitio</h2>
+          <ul class="site-footer__nav">
+            <li><a class="site-footer__link" href="./index.html">Inicio</a></li>
+            <li><a class="site-footer__link" href="./iglesia.html">La iglesia</a></li>
+            <li><a class="site-footer__link" href="./patrimonio.html">Patrimonio</a></li>
+            <li><a class="site-footer__link" href="./galeria.html">Galería</a></li>
+            <li><a class="site-footer__link" href="./actualidad.html">Actualidad</a></li>
+            <li><a class="site-footer__link" href="./visita.html">Visita y contacto</a></li>
+            <li><a class="site-footer__link" href="./museo.html">Museo virtual</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="site-footer__heading">Datos de visita y contacto</h2>
+          <ul class="footer-contact-list">
+            <li>
+              <strong>Dirección verificada</strong>
+              Carrera 11 entre Calles 19 y 20, Centro Histórico, Tunja, Boyacá, Colombia.
+            </li>
+            <li>
+              <strong>Coordenadas geográficas</strong>
+              5°32′07″N 73°22′04″O · Altitud: 2.810 m s. n. m.
+            </li>
+            <li>
+              <strong>Atención e información</strong>
+              Despacho y acceso peatonal por la Carrera 11 (Horarios litúrgicos y culturales sujetos a programación del templo).
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__academic">
+        <p>
+          <strong>Aclaración de carácter académico:</strong> Este sitio web es un proyecto estrictamente académico y educativo de desarrollo Frontend (Fase 1: Arquitectura de información, estructura semántica HTML5 y sistema de diseño esquemórfico CSS3). No representa un canal administrativo comercial ni sustituye las comunicaciones oficiales eclesiásticas.
+        </p>
+        <div class="site-footer__credits">
+          <span>Créditos de desarrollo y diseño: Proyecto Académico — Iglesia de Santo Domingo de Tunja (2026).</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/main.js" defer></script>
+  <script src="./js/scroll-animations.js" defer></script>
+  <script src="./js/chroma-waves.js" defer></script>
 </body>
 </html>

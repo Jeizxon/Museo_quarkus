@@ -1,0 +1,923 @@
+/* ==========================================================================
+   SISTEMA DE DISEÑO — IGLESIA DE SANTO DOMINGO DE TUNJA (FASE 1)
+   Archivo: css/skeuomorphism.css
+   Propósito: Definición física, matérica y lumínica de los componentes
+              esquemórficos inspirados en objetos reales del templo dominico:
+              1. Placa Epigráfica / Sillar Tallado en Piedra Arenisca (Interactivo)
+              2. Ficha Capitular de Archivo en Papel de Algodón Antiguo
+              3. Códice / Libro Coral Dominicano Abierto a Doble Folio
+              4. Marco / Retablo en Madera de Cedro Tallada y Pan de Oro
+   ========================================================================== */
+
+/* ==========================================================================
+   COMPONENTE ESQUEMÓRFICO 1 (INTERACTIVO):
+   PLACA EPIGRÁFICA / SILLAR TALLADO EN PIEDRA ARENISCA Y BRONCE
+   Objeto real: Cartelas epigráficas labradas en piedra arenisca boyacense de
+   la portada renacentista (s. XVI) con pernos de bronce envejecido.
+   Accesibilidad táctil y escritorio: Estados completos default, :focus-visible
+   y :active (hundimiento mecánico real de 3px sin depender de :hover).
+   ========================================================================== */
+.skeuo-stone-plaque {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-6) var(--space-6) var(--space-6) var(--space-6);
+  text-align: left;
+  text-decoration: none;
+  color: var(--color-ink-primary);
+
+  /* Textura mineral de piedra arenisca: micro-porosidad + luz cenital oblicua */
+  background-color: var(--color-bg-sandstone);
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(255, 251, 240, 0.55) 0%, transparent 55%),
+    radial-gradient(rgba(110, 88, 53, 0.08) 1px, transparent 1px),
+    radial-gradient(rgba(255, 252, 245, 0.35) 1px, transparent 1px),
+    linear-gradient(166deg, #EFE7D5 0%, #E3D7BF 52%, #D4C5A8 100%);
+  background-size: 100% 100%, 12px 12px, 18px 18px, 100% 100%;
+  background-position: 0 0, 0 0, 6px 8px, 0 0;
+
+  /* Bisel arquitectónico tallado a cincel */
+  border-top: 1px solid #FBF8F0;
+  border-left: 1px solid #F7F2E4;
+  border-right: 1px solid #B5A487;
+  border-bottom: 1px solid #9E8D70;
+  border-radius: 3px;
+
+  /* Espesor físico de sillar (4px de canto de piedra) + sombra sobre el muro */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 253, 247, 0.85),
+    inset 0 -2px 4px rgba(92, 73, 44, 0.16),
+    0 4px 0 #9B8B6F,
+    0 5px 0 #7C6E56,
+    0 12px 20px -6px rgba(34, 24, 15, 0.25);
+
+  transition:
+    transform var(--duration-press) var(--ease-out-strong),
+    box-shadow var(--duration-press) var(--ease-out-strong),
+    background-color var(--duration-ui) ease;
+}
+
+/* Incisión / moldura interior labrada en bajorrelieve */
+.skeuo-stone-plaque::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(110, 89, 56, 0.24);
+  border-radius: 2px;
+  box-shadow:
+    inset 1px 1px 1px rgba(68, 52, 30, 0.16),
+    1px 1px 0 rgba(255, 252, 244, 0.68);
+  pointer-events: none;
+}
+
+/* Remaches / clavijas esquineras en bronce envejecido */
+.skeuo-stone-plaque::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at center, #D9B76C 0%, #7C5D24 55%, #34250F 85%, transparent 100%),
+    radial-gradient(circle at center, #D9B76C 0%, #7C5D24 55%, #34250F 85%, transparent 100%),
+    radial-gradient(circle at center, #D9B76C 0%, #7C5D24 55%, #34250F 85%, transparent 100%),
+    radial-gradient(circle at center, #D9B76C 0%, #7C5D24 55%, #34250F 85%, transparent 100%);
+  background-size: 7px 7px;
+  background-repeat: no-repeat;
+  background-position: top left, top right, bottom left, bottom right;
+  opacity: 0.85;
+}
+
+/* Variante compacta para botones de acción / filtros / envío */
+.skeuo-stone-plaque--compact {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 3.1rem;
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.skeuo-stone-plaque--compact::after {
+  inset: 7px;
+  background-size: 5px 5px;
+}
+
+/* Variante destacada con sello en almagre (acción primaria) */
+.skeuo-stone-plaque--primary {
+  border-left: 4px solid var(--color-accent-almagre);
+}
+
+.skeuo-stone-plaque__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-accent-almagre);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.skeuo-stone-plaque__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-ink-primary);
+  margin: 0;
+}
+
+.skeuo-stone-plaque__desc {
+  font-size: var(--text-sm);
+  color: var(--color-ink-secondary);
+  margin: 0;
+  max-width: 54ch;
+}
+
+/* Indicador físico tallado (comprensible en pantallas táctiles sin hover) */
+.skeuo-stone-plaque__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  align-self: flex-start;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink-primary);
+  background-color: rgba(255, 250, 240, 0.45);
+  border: 1px solid rgba(110, 89, 56, 0.28);
+  border-radius: var(--radius-xs);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ESTADO :HOVER — Exclusivo para punteros finos (evita hover pegado en móvil) */
+@media (hover: hover) and (pointer: fine) {
+  .skeuo-stone-plaque:hover {
+    color: var(--color-ink-primary);
+    background-image:
+      radial-gradient(circle at 20% 18%, rgba(255, 253, 246, 0.78) 0%, transparent 60%),
+      radial-gradient(rgba(110, 88, 53, 0.08) 1px, transparent 1px),
+      radial-gradient(rgba(255, 252, 245, 0.35) 1px, transparent 1px),
+      linear-gradient(166deg, #F5EFE0 0%, #E8DEC8 52%, #D9CCB1 100%);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 254, 250, 0.95),
+      inset 0 -2px 4px rgba(92, 73, 44, 0.14),
+      0 5px 0 #9B8B6F,
+      0 6px 0 #7C6E56,
+      0 15px 24px -6px rgba(34, 24, 15, 0.28);
+  }
+}
+
+/* ESTADO :FOCUS / :FOCUS-VISIBLE — Alto contraste accesible para teclado */
+.skeuo-stone-plaque:focus,
+.skeuo-stone-plaque:focus-visible {
+  outline: 3px solid var(--color-accent-almagre);
+  outline-offset: 4px;
+  box-shadow:
+    inset 0 0 0 2px var(--color-material-gold-bright),
+    0 4px 0 #9B8B6F,
+    0 5px 0 #7C6E56,
+    0 12px 22px -5px rgba(122, 35, 32, 0.28);
+}
+
+/* ESTADO :ACTIVE y [aria-pressed="true"] — Hundimiento mecánico real en el muro */
+.skeuo-stone-plaque:active,
+.skeuo-stone-plaque[aria-pressed="true"] {
+  transform: translateY(3px) scale(0.992);
+  border-top-color: #B9A88C;
+  border-bottom-color: #EAE1CE;
+  box-shadow:
+    inset 0 3px 7px rgba(36, 26, 15, 0.30),
+    inset 0 1px 2px rgba(36, 26, 15, 0.22),
+    0 1px 0 #8A7A5F,
+    0 3px 8px -2px rgba(34, 24, 15, 0.20);
+}
+
+.skeuo-stone-plaque[aria-pressed="true"] .skeuo-stone-plaque__cta,
+.skeuo-stone-plaque[aria-pressed="true"] {
+  background-color: #DDD0B5;
+  color: var(--color-accent-almagre-strong);
+}
+
+/* ==========================================================================
+   COMPONENTE ESQUEMÓRFICO 2:
+   FICHA CAPITULAR DE ARCHIVO EN PAPEL DE ALGODÓN ENVEJECIDO
+   Objeto real: Pliegos y fichas catalográficas en papel verjurado de trapo
+   con sello seco en relieve de los archivos conventuales dominicos.
+   ========================================================================== */
+.skeuo-archive-card {
+  position: relative;
+  padding: var(--space-8) var(--space-8) var(--space-8) calc(var(--space-8) + 1.15rem);
+  color: var(--color-ink-primary);
+  background-color: var(--color-bg-parchment);
+
+  /* Verjura horizontal sutil de papel de algodón + pátina cálida perimetral */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 3px,
+      rgba(130, 102, 58, 0.028) 3px,
+      rgba(130, 102, 58, 0.028) 4px
+    ),
+    radial-gradient(circle at 50% 45%, rgba(255, 253, 248, 0.85) 35%, rgba(226, 213, 187, 0.45) 100%);
+
+  border: 1px solid #D3C5A9;
+  border-radius: 2px;
+
+  /* Sombra interior de oxidación leve + grosor de 2 folios apilados debajo */
+  box-shadow:
+    inset 0 0 32px rgba(145, 112, 62, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 2px rgba(34, 24, 15, 0.10),
+    0 5px 0 -2px #EFE7D4,
+    0 5px 2px -1px rgba(34, 24, 15, 0.14),
+    0 10px 0 -4px #E5DAC2,
+    0 11px 3px -3px rgba(34, 24, 15, 0.16),
+    0 18px 28px -10px rgba(34, 24, 15, 0.18);
+}
+
+/* Margen doble de tinta ferrogálica y perforaciones de cosido de legajo */
+.skeuo-archive-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.55rem;
+  width: 4px;
+  border-left: 1px solid rgba(122, 35, 32, 0.30);
+  border-right: 1px solid rgba(122, 35, 32, 0.16);
+  pointer-events: none;
+}
+
+.skeuo-archive-card::after {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  left: 0.55rem;
+  width: 8px;
+  background-image: radial-gradient(
+    circle,
+    #D5C8AE 0px,
+    #C4B598 2.5px,
+    rgba(255, 255, 255, 0.7) 3.2px,
+    transparent 3.6px
+  );
+  background-size: 8px 36px;
+  background-repeat: repeat-y;
+  pointer-events: none;
+}
+
+/* Pestaña troquelada superior de signatura documental */
+.skeuo-archive-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px dashed rgba(94, 76, 48, 0.32);
+}
+
+.skeuo-archive-card__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.22rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-primary);
+  background-color: #EDE3CC;
+  border: 1px solid #C8B797;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Sello seco prensado en el papel (Blind Emboss Seal) */
+.skeuo-emboss-seal {
+  display: inline-grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 50%;
+  font-family: var(--font-serif);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(94, 75, 45, 0.72);
+  background: radial-gradient(circle at 35% 30%, #FCF9F1, #EAE0C8);
+  border: 1px dashed rgba(126, 102, 62, 0.38);
+  box-shadow:
+    inset 2px 2px 3px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 3px rgba(96, 74, 41, 0.22),
+    1px 2px 3px rgba(72, 54, 28, 0.14);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   COMPONENTE ESQUEMÓRFICO 3 (INTERACTIVO CON PASO DE PÁGINA 3D):
+   CÓDICE / LIBRO CORAL DOMINICANO ABIERTO A DOBLE FOLIO
+   Objeto real: Libros corales y crónicas conventuales abiertas sobre facistol
+   de madera de cedro, con animación tridimensional de paso de hoja (page-flip)
+   sobre el eje izquierdo (perspective: 1200px, transform-origin: left center,
+   transform: rotateY(-180deg), backface-visibility: hidden) y pestaña física
+   de pergamino y bronce accesible por clic, toque y teclado.
+   ========================================================================== */
+.skeuo-open-codex {
+  position: relative;
+  padding: 16px 20px 18px;
+  border-radius: 6px;
+  perspective: 5200px;
+  overflow: hidden;
+
+  /* Cubierta exterior en madera de cedro/cuero oscuro con filete dorado */
+  background:
+    linear-gradient(180deg, #342318 0%, #241710 50%, #1B110B 100%);
+  border: 1px solid #4A3323;
+  box-shadow:
+    inset 0 1px 0 rgba(235, 198, 120, 0.28),
+    inset 0 0 0 3px rgba(158, 123, 47, 0.22),
+    0 22px 44px -12px rgba(24, 16, 10, 0.36);
+}
+
+/* Pliego interior con perspectiva contenida y cantos de hojas apiladas */
+.skeuo-open-codex__spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background-color: #FAF6EC;
+  border-radius: 3px;
+  perspective: 5200px;
+  transform-style: preserve-3d;
+
+  /* Cantos físicos de decenas de páginas apiladas en los costados e inferior */
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 6px solid transparent;
+  background-clip: padding-box;
+  box-shadow:
+    -4px 0 0 #EFE7D5,
+    -7px 0 0 #D8CBB0,
+    -8px 0 2px rgba(24, 16, 10, 0.35),
+    4px 0 0 #EFE7D5,
+    7px 0 0 #D8CBB0,
+    8px 0 2px rgba(24, 16, 10, 0.35),
+    0 3px 0 #EAE1CD,
+    0 6px 0 #CFC1A5;
+}
+
+/* Sombra cilíndrica realista del lomo central cosido (Gutter Shadow) */
+.skeuo-open-codex__spread::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3.8rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(48, 34, 18, 0) 0%,
+    rgba(48, 34, 18, 0.11) 36%,
+    rgba(28, 19, 10, 0.32) 49%,
+    rgba(255, 252, 245, 0.58) 51%,
+    rgba(48, 34, 18, 0.13) 62%,
+    rgba(48, 34, 18, 0) 100%
+  );
+  z-index: 6;
+}
+
+/* Cinta marcapáginas litúrgica en rojo almagre con cola de milano */
+.skeuo-open-codex__ribbon {
+  position: absolute;
+  top: -4px;
+  left: calc(50% - 11px);
+  width: 22px;
+  height: 54px;
+  z-index: 8;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06) 0px,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(180deg, #912B27 0%, #7A2320 65%, #591715 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+  filter: drop-shadow(0 4px 4px rgba(28, 18, 10, 0.35));
+}
+
+.skeuo-open-codex__page {
+  position: relative;
+  padding: var(--space-10) var(--space-10);
+  background-color: #FAF6EC;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 27px,
+      rgba(138, 110, 65, 0.05) 27px,
+      rgba(138, 110, 65, 0.05) 28px
+    ),
+    radial-gradient(circle at 50% 45%, rgba(255, 253, 248, 0.92) 40%, rgba(226, 213, 187, 0.52) 100%);
+}
+
+.skeuo-open-codex__page--left,
+.skeuo-open-codex__page--base-left {
+  grid-column: 1;
+  grid-row: 1;
+  border-right: 1px solid rgba(92, 71, 42, 0.22);
+  box-shadow: inset -18px 0 26px -16px rgba(42, 29, 15, 0.16);
+}
+
+.skeuo-open-codex__page--base-right {
+  grid-column: 2;
+  grid-row: 1;
+  box-shadow: inset 18px 0 26px -16px rgba(42, 29, 15, 0.18);
+}
+
+/* Sombra dinámica proyectada sobre el folio inferior derecho al girar la hoja */
+.skeuo-open-codex__page--base-right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(24, 16, 9, 0.36) 0%,
+    rgba(38, 26, 14, 0.18) 38%,
+    rgba(38, 26, 14, 0.04) 100%
+  );
+  opacity: 1;
+  transition: opacity 0.86s var(--ease-solemn);
+}
+
+.skeuo-open-codex.is-flipped .skeuo-open-codex__page--base-right::before {
+  opacity: 0;
+}
+
+/* Hoja batiente 3D (Page-Flip Leaf) contenida dentro del marco del libro */
+.skeuo-codex-sheet {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg) scaleY(1);
+  z-index: 5;
+  will-change: transform;
+}
+
+.skeuo-open-codex.is-flipped .skeuo-codex-sheet {
+  transform: rotateY(-180deg) scaleY(1);
+  animation: codexTurnForward 0.76s var(--ease-solemn) forwards;
+}
+
+.skeuo-open-codex.is-returning .skeuo-codex-sheet {
+  transform: rotateY(0deg) scaleY(1);
+  animation: codexTurnBackward 0.76s var(--ease-solemn) forwards;
+}
+
+/* Compensación de escala vertical en el punto medio (-90deg) para evitar
+   que la hoja sobresalga del libro o dé sensación de salirse de la pantalla */
+@keyframes codexTurnForward {
+  0% {
+    transform: rotateY(0deg) scaleY(1);
+  }
+  50% {
+    transform: rotateY(-90deg) scaleY(0.91);
+  }
+  100% {
+    transform: rotateY(-180deg) scaleY(1);
+  }
+}
+
+@keyframes codexTurnBackward {
+  0% {
+    transform: rotateY(-180deg) scaleY(1);
+  }
+  50% {
+    transform: rotateY(-90deg) scaleY(0.91);
+  }
+  100% {
+    transform: rotateY(0deg) scaleY(1);
+  }
+}
+
+/* Caras anverso (Recto - Folio II) y reverso (Verso - Folio III) de la hoja */
+.skeuo-codex-sheet__face {
+  grid-area: 1 / 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 0 2px 2px 0;
+}
+
+.skeuo-codex-sheet__face--front {
+  transform: rotateY(0deg);
+  box-shadow:
+    inset 22px 0 30px -18px rgba(42, 29, 15, 0.22),
+    -2px 0 6px rgba(28, 19, 10, 0.08);
+}
+
+/* Sombra dinámica de curvatura del papel antiguo en el anverso durante el giro */
+.skeuo-codex-sheet__face--front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(32, 21, 11, 0.28) 0%,
+    rgba(255, 251, 240, 0.25) 28%,
+    rgba(42, 29, 15, 0.18) 85%,
+    rgba(28, 18, 10, 0.34) 100%
+  );
+  opacity: 0.22;
+  transition: opacity 0.88s var(--ease-solemn);
+}
+
+.skeuo-open-codex.is-flipped .skeuo-codex-sheet__face--front::after {
+  opacity: 0.78;
+}
+
+.skeuo-codex-sheet__face--back {
+  transform: rotateY(180deg);
+  border-right: 1px solid rgba(92, 71, 42, 0.22);
+  border-radius: 2px 0 0 2px;
+  box-shadow:
+    inset -22px 0 30px -18px rgba(42, 29, 15, 0.24),
+    -10px 0 24px -8px rgba(20, 13, 8, 0.28);
+}
+
+/* Sombra dinámica de pliegue en el reverso (Folio III) */
+.skeuo-codex-sheet__face--back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    270deg,
+    rgba(32, 21, 11, 0.26) 0%,
+    rgba(255, 251, 240, 0.22) 24%,
+    transparent 68%
+  );
+  opacity: 0.85;
+  transition: opacity 0.88s var(--ease-solemn);
+}
+
+.skeuo-open-codex.is-flipped .skeuo-codex-sheet__face--back::after {
+  opacity: 0.28;
+}
+
+.skeuo-open-codex__folio-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-4);
+}
+
+/* Barra inferior de control del Códice + Pestaña/Marcador físico de paso de hoja */
+.skeuo-open-codex__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: 12px;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(180deg, rgba(24, 16, 10, 0.65) 0%, rgba(18, 12, 8, 0.85) 100%);
+  border: 1px solid rgba(216, 180, 103, 0.28);
+  border-radius: 3px;
+}
+
+.skeuo-open-codex__status {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-material-gold-bright);
+}
+
+/* Pestaña / Marcador de libro interactivo (Reposo, :focus, :active) */
+.skeuo-codex-bookmark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.95rem;
+  padding: 0.55rem 1.15rem;
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--color-ink-primary);
+  cursor: pointer;
+
+  /* Materialidad de marcador en pergamino grueso con herraje de bronce */
+  background:
+    radial-gradient(circle at 20% 25%, rgba(255, 253, 246, 0.85), transparent 60%),
+    linear-gradient(165deg, #F6EFE0 0%, #E7DAC0 55%, #D5C39F 100%);
+  border-top: 1px solid #FFFDF7;
+  border-left: 4px solid var(--color-accent-almagre);
+  border-right: 1px solid #A8926A;
+  border-bottom: 1px solid #8F7A54;
+  border-radius: 2px 4px 4px 2px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 3px 0 #7C6744,
+    0 6px 14px rgba(12, 8, 5, 0.45);
+  transition:
+    transform var(--duration-press) var(--ease-out-strong),
+    box-shadow var(--duration-press) var(--ease-out-strong),
+    background-color var(--duration-ui) ease;
+}
+
+.skeuo-codex-bookmark__badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.45rem;
+  color: #FAF5EA;
+  background-color: var(--color-accent-almagre);
+  border-radius: 2px;
+}
+
+.skeuo-codex-bookmark__icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--color-accent-almagre);
+  transition: transform 0.45s var(--ease-solemn);
+}
+
+.skeuo-open-codex.is-flipped .skeuo-codex-bookmark__icon {
+  transform: rotateY(180deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skeuo-codex-bookmark:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 4px 0 #7C6744,
+      0 8px 18px rgba(12, 8, 5, 0.52);
+  }
+}
+
+/* Estado :focus / :focus-visible claramente distinguible */
+.skeuo-codex-bookmark:focus,
+.skeuo-codex-bookmark:focus-visible {
+  outline: 3px solid var(--color-material-gold-bright);
+  outline-offset: 3px;
+  box-shadow:
+    inset 0 0 0 2px var(--color-accent-almagre),
+    0 3px 0 #7C6744,
+    0 0 16px rgba(216, 180, 103, 0.55);
+}
+
+/* Estado :active y presionado táctil / clic */
+.skeuo-codex-bookmark:active {
+  transform: translateY(2px) scale(0.985);
+  box-shadow:
+    inset 0 2px 5px rgba(36, 25, 14, 0.32),
+    0 1px 0 #7C6744,
+    0 2px 6px rgba(12, 8, 5, 0.35);
+}
+
+.skeuo-codex-bookmark[aria-expanded="true"] {
+  border-left-color: var(--color-material-gold);
+  background:
+    linear-gradient(165deg, #EFE5CE 0%, #DFCFAF 55%, #CBB790 100%);
+}
+
+/* ==========================================================================
+   COMPONENTE ESQUEMÓRFICO COMPLEMENTARIO (4):
+   MARCO / RETABLO EN MADERA DE CEDRO TALLADA Y PAN DE ORO
+   Objeto real: Molduras escalonadas en cedro policromado, bol armenio rojo
+   y laminilla de oro de los retablos de la Capilla del Rosario.
+   ========================================================================== */
+.skeuo-carved-wood-frame {
+  position: relative;
+  padding: 14px;
+  border-radius: 3px;
+
+  /* Veta sutil de madera de cedro tallada */
+  background-color: var(--color-bg-cedar-mid);
+  background-image:
+    repeating-linear-gradient(
+      94deg,
+      rgba(255, 236, 200, 0.03) 0px,
+      rgba(255, 236, 200, 0.03) 2px,
+      transparent 2px,
+      transparent 7px
+    ),
+    linear-gradient(145deg, #3D2A1D 0%, #261A12 55%, #1A110C 100%);
+
+  border: 1px solid #4F3726;
+
+  /* Molduras concéntricas: madera exterior + filete pan de oro + bol almagre */
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 235, 190, 0.20),
+    inset -2px -2px 4px rgba(10, 6, 4, 0.65),
+    inset 0 0 0 5px #2A1C13,
+    inset 0 0 0 7px #B68F3C,
+    inset 0 0 0 9px #5E1B18,
+    0 18px 36px -10px rgba(28, 19, 12, 0.34);
+}
+
+.skeuo-carved-wood-frame__mat {
+  position: relative;
+  overflow: hidden;
+  background-color: #EAE1CE;
+  border: 1px solid #9E7B2F;
+  box-shadow: inset 0 2px 8px rgba(20, 14, 9, 0.35);
+}
+
+.skeuo-carved-wood-frame__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.skeuo-carved-wood-frame__caption {
+  margin-top: 10px;
+  padding: var(--space-2) var(--space-3);
+  background-color: rgba(20, 13, 9, 0.72);
+  border-top: 1px solid rgba(182, 143, 60, 0.38);
+  color: var(--color-ink-on-dark-muted);
+  font-size: var(--text-xs);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD DE COMPONENTES ESQUEMÓRFICOS (< 768px)
+   Garantiza lectura limpia sin comprimir columnas ni recargar márgenes.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .skeuo-stone-plaque {
+    padding: var(--space-5);
+  }
+
+  .skeuo-archive-card {
+    padding: var(--space-6) var(--space-5) var(--space-6) calc(var(--space-5) + 1rem);
+  }
+
+  .skeuo-archive-card::before {
+    left: 1.15rem;
+  }
+
+  .skeuo-archive-card::after {
+    left: 0.35rem;
+  }
+
+  /* En móvil (< 768px), giro de página sutil y contenido dentro del libro
+     sin desbordar ni salirse de la pantalla */
+  .skeuo-open-codex {
+    padding: 8px 10px 12px;
+    overflow: hidden;
+  }
+
+  .skeuo-open-codex__spread {
+    grid-template-columns: 1fr;
+    border-left-width: 4px;
+    border-right-width: 4px;
+    perspective: 4000px;
+    overflow: hidden;
+  }
+
+  .skeuo-open-codex__spread::before {
+    display: none;
+  }
+
+  .skeuo-open-codex__ribbon {
+    left: auto;
+    right: 1.25rem;
+    height: 42px;
+  }
+
+  .skeuo-open-codex__page {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .skeuo-open-codex__page--base-left {
+    grid-column: 1;
+    grid-row: 1;
+    border-right: 0;
+    border-bottom: 2px solid rgba(92, 71, 42, 0.25);
+    transform-origin: left center;
+    transition:
+      transform 0.65s var(--ease-solemn),
+      opacity 0.55s var(--ease-solemn);
+  }
+
+  .skeuo-open-codex.is-flipped .skeuo-open-codex__page--base-left {
+    transform: rotateY(-24deg) scale(0.97);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .skeuo-codex-sheet,
+  .skeuo-open-codex.is-flipped .skeuo-codex-sheet,
+  .skeuo-open-codex.is-returning .skeuo-codex-sheet {
+    grid-column: 1;
+    grid-row: 2;
+    animation: none;
+    transform: none;
+  }
+
+  .skeuo-open-codex.is-flipped .skeuo-codex-sheet {
+    grid-row: 1;
+  }
+
+  .skeuo-codex-sheet__face--front {
+    transform-origin: left center;
+    transition:
+      transform 0.65s var(--ease-solemn),
+      opacity 0.55s var(--ease-solemn);
+  }
+
+  .skeuo-codex-sheet__face--back {
+    transform-origin: left center;
+    transform: rotateY(18deg) scale(0.97);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.65s var(--ease-solemn),
+      opacity 0.55s var(--ease-solemn);
+  }
+
+  .skeuo-open-codex.is-flipped .skeuo-codex-sheet__face--front {
+    transform: rotateY(-24deg) scale(0.97);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .skeuo-open-codex.is-flipped .skeuo-codex-sheet__face--back {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    border-right: 0;
+    border-bottom: 2px solid rgba(92, 71, 42, 0.25);
+  }
+
+  .skeuo-open-codex__page--base-right {
+    grid-column: 1;
+    grid-row: 2;
+    transform-origin: left center;
+    transform: rotateY(18deg) scale(0.97);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.65s var(--ease-solemn),
+      opacity 0.55s var(--ease-solemn);
+  }
+
+  .skeuo-open-codex.is-flipped .skeuo-open-codex__page--base-right {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .skeuo-codex-bookmark {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .skeuo-carved-wood-frame {
+    padding: 10px;
+  }
+}

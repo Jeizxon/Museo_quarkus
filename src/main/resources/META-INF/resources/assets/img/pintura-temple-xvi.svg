@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Lámina de pintura mural al temple del siglo XVI y motivos florales">
+  <rect width="800" height="600" fill="#F4EDE0"/>
+  <rect x="26" y="26" width="748" height="548" fill="none" stroke="#7A2320" stroke-width="2"/>
+  <rect x="36" y="36" width="728" height="528" fill="none" stroke="#9E7B2F" stroke-width="1"/>
+  <!-- Cenefa mural manierista y sincretismo vegetal -->
+  <circle cx="400" cy="295" r="145" fill="#EFE4CE" stroke="#7A2320" stroke-width="2.5"/>
+  <circle cx="400" cy="295" r="112" fill="none" stroke="#9E7B2F" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <polygon points="400,175 432,263 520,295 432,327 400,415 368,327 280,295 368,263" fill="#7A2320" opacity="0.82"/>
+  <circle cx="400" cy="295" r="30" fill="#F4EDE0" stroke="#9E7B2F" stroke-width="2"/>
+  <text x="54" y="64" font-family="monospace" font-size="13" fill="#7A2320" letter-spacing="2">LÁMINA PAT-03 · PINTURA MURAL AL TEMPLE (S. XVI)</text>
+  <text x="54" y="548" font-family="serif" font-size="15" fill="#2A1D15">Ornamentación mural colonial con pigmentos minerales sobre cal</text>
+</svg>

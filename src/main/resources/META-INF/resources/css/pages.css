@@ -1,0 +1,834 @@
+/* ==========================================================================
+   SISTEMA DE DISEÑO — IGLESIA DE SANTO DOMINGO DE TUNJA (FASE 1)
+   Archivo: css/pages.css
+   Propósito: Composiciones específicas de las 7 páginas conectadas,
+              respetando proporciones de imagen (aspect-ratio + object-fit),
+              estabilidad de viewport (svh) y colapso móvil (< 768px).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PÁGINA INICIO (index.html) — Hero Editorial Asimétrico con Chroma Waves
+   -------------------------------------------------------------------------- */
+.hero-institutional {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100svh - var(--header-height) - 2.25rem);
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-12);
+  background-color: #0a0806;
+  border-bottom: 1px solid var(--color-border-gold);
+}
+
+/* Contenedor de fondo absoluto exclusivo de Chroma Waves (React Bits Pro) */
+.chroma-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #0a0806;
+}
+
+.chroma-waves__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Sutil velo de contraste para garantizar legibilidad editorial sobre crestas de luz */
+.chroma-waves::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 28% 48%,
+    rgba(10, 8, 6, 0.42) 0%,
+    rgba(10, 8, 6, 0.18) 58%,
+    rgba(10, 8, 6, 0.36) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-institutional__grid {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.hero-institutional__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+.hero-institutional .eyebrow {
+  position: relative;
+  z-index: 10;
+  color: #ffffff;
+}
+
+.hero-institutional .eyebrow::before {
+  background-color: #ffffff;
+}
+
+/* Título principal imponente con clamp() y animación de reflejo lumínico sobre las letras */
+.hero-title-mirror {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: clamp(2.65rem, 5.1vw + 0.9rem, 5.15rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.022em;
+  color: #ffffff;
+  margin-bottom: var(--space-1);
+}
+
+.hero-title-mirror::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-image: linear-gradient(
+    112deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(255, 255, 255, 0.55) 45%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.55) 55%,
+    transparent 64%,
+    transparent 100%
+  );
+  background-size: 240% 100%;
+  background-repeat: no-repeat;
+  background-position: 140% 0;
+  color: transparent;
+  text-shadow: none;
+  -webkit-background-clip: text;
+  background-clip: text;
+  pointer-events: none;
+  user-select: none;
+  animation: titleLightReflection 6.5s var(--ease-solemn) infinite;
+}
+
+@keyframes titleLightReflection {
+  0%,
+  18% {
+    background-position: 145% 0;
+  }
+  62%,
+  100% {
+    background-position: -45% 0;
+  }
+}
+
+.hero-institutional__subtitle {
+  position: relative;
+  z-index: 10;
+  font-size: var(--text-lg);
+  color: #ffffff;
+  max-width: 56ch;
+}
+
+.hero-institutional__actions {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.hero-institutional__media {
+  position: relative;
+  z-index: 10;
+}
+
+.hero-institutional__media .skeuo-carved-wood-frame__mat {
+  aspect-ratio: 4 / 3;
+}
+
+/* Capitular discreta tipo edición vaticana para la presentación breve */
+.dropcap-paragraph::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 3.4rem;
+  line-height: 0.85;
+  font-weight: 700;
+  padding-right: var(--space-3);
+  padding-top: 4px;
+  color: var(--color-accent-almagre);
+}
+
+/* Grilla asimétrica de los 3 accesos directos destacados (Lead + Par apilado) */
+.featured-shortcuts {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: var(--space-6);
+  align-items: stretch;
+}
+
+.featured-shortcuts__lead {
+  display: flex;
+}
+
+.featured-shortcuts__stack {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   2. PÁGINA LA IGLESIA (iglesia.html)
+   -------------------------------------------------------------------------- */
+.arch-feature-figure .skeuo-carved-wood-frame__mat {
+  aspect-ratio: 4 / 3;
+}
+
+.bibliography-list {
+  margin: 0;
+  padding-left: var(--space-6);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.bibliography-list li {
+  margin: 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px dashed rgba(94, 76, 48, 0.25);
+  font-size: var(--text-sm);
+  color: var(--color-ink-secondary);
+}
+
+.bibliography-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. PÁGINA PATRIMONIO (patrimonio.html) — Zig-Zag Editorial de 2 Columnas
+   -------------------------------------------------------------------------- */
+.heritage-collection {
+  display: grid;
+  gap: var(--space-16);
+}
+
+.heritage-entry {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+/* Alternancia visual Zig-Zag en escritorio */
+.heritage-entry:nth-child(even) {
+  grid-template-columns: 1.05fr 0.95fr;
+}
+
+.heritage-entry:nth-child(even) .heritage-entry__media {
+  order: 2;
+}
+
+.heritage-entry:nth-child(even) .heritage-entry__dossier {
+  order: 1;
+}
+
+.heritage-entry__media .skeuo-carved-wood-frame__mat {
+  aspect-ratio: 4 / 3;
+}
+
+.heritage-license-note {
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg-surface);
+  border-left: 3px solid var(--color-material-gold);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. PÁGINA GALERÍA (galeria.html) — Gradient Carousel 3D (React Bits Pro)
+   -------------------------------------------------------------------------- */
+.gallery-carousel-section {
+  --gc-tint-1: 214, 168, 102;
+  --gc-tint-2: 146, 52, 40;
+  position: relative;
+  overflow: hidden;
+  background-color: #120c08;
+  border-top: 1px solid rgba(246, 157, 65, 0.25);
+  border-bottom: 1px solid rgba(246, 157, 65, 0.28);
+  transition: background-color 0.8s var(--ease-solemn);
+}
+
+/* Capa de iluminación atmosférica teñida dinámicamente por la tarjeta activa */
+.gradient-carousel__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gradient-carousel__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(78px);
+  will-change: transform, background;
+  transition:
+    background 0.75s var(--ease-solemn),
+    transform 0.85s var(--ease-solemn),
+    opacity 0.75s var(--ease-solemn);
+}
+
+.gradient-carousel__orb--primary {
+  width: min(76vw, 860px);
+  height: min(76vw, 860px);
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(var(--gc-tint-1), 0.42) 0%,
+    rgba(var(--gc-tint-1), 0.18) 44%,
+    rgba(var(--gc-tint-1), 0) 74%
+  );
+}
+
+.gradient-carousel__orb--secondary {
+  width: min(64vw, 720px);
+  height: min(64vw, 720px);
+  top: 60%;
+  left: 54%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(var(--gc-tint-2), 0.34) 0%,
+    rgba(var(--gc-tint-2), 0.14) 48%,
+    rgba(var(--gc-tint-2), 0) 76%
+  );
+}
+
+.gradient-carousel__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 48%, transparent 25%, rgba(14, 9, 6, 0.76) 100%),
+    linear-gradient(180deg, rgba(18, 12, 8, 0.72) 0%, transparent 18%, transparent 82%, rgba(18, 12, 8, 0.82) 100%);
+}
+
+.gallery-carousel-section__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.gallery-carousel-header {
+  border-top-color: rgba(246, 157, 65, 0.38);
+  margin-bottom: var(--space-6);
+}
+
+.gallery-carousel-header::before {
+  background-color: #f69d41;
+}
+
+.gallery-carousel-header .eyebrow {
+  color: #f69d41;
+}
+
+.gallery-carousel-header .eyebrow::before {
+  background-color: #ffffff;
+}
+
+.gallery-carousel-header h2 {
+  color: var(--color-ink-on-dark);
+  margin-bottom: 0;
+}
+
+.gallery-carousel-header__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.gallery-carousel-header__status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+.gallery-carousel-header__status .mono-code {
+  color: #f69d41;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.gallery-carousel-header__hint {
+  font-size: var(--text-xs);
+  color: var(--color-ink-on-dark-muted);
+}
+
+.gallery-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+/* Escenario 3D del Gradient Carousel */
+.gradient-carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gradient-carousel[hidden] {
+  display: none;
+}
+
+.gradient-carousel__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(450px, 56vw, 560px);
+  perspective: 1200px;
+  perspective-origin: 50% 48%;
+  overflow: visible;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.gradient-carousel__stage.is-dragging {
+  cursor: grabbing;
+}
+
+.gradient-carousel__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.gallery-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-surface);
+  border: 1px solid rgba(216, 180, 103, 0.35);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-ambient-lg);
+  overflow: hidden;
+}
+
+.gradient-carousel__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(285px, 44vw, 510px);
+  max-width: 90vw;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+  border: 1px solid rgba(216, 180, 103, 0.32);
+  box-shadow:
+    0 22px 48px -12px rgba(8, 5, 3, 0.72),
+    0 0 0 1px rgba(255, 248, 231, 0.08);
+  transition:
+    border-color 0.35s var(--ease-solemn),
+    box-shadow 0.45s var(--ease-solemn);
+}
+
+.gradient-carousel__card.is-active {
+  border-color: #f69d41;
+  box-shadow:
+    0 28px 64px -12px rgba(6, 4, 2, 0.85),
+    0 0 36px -6px rgba(var(--gc-tint-1), 0.45),
+    inset 0 0 0 1px rgba(246, 157, 65, 0.42);
+}
+
+.gallery-card[hidden] {
+  display: none !important;
+}
+
+.gallery-card__trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background-color: #241912;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  transition: transform var(--duration-press) var(--ease-out-strong);
+}
+
+.gallery-card__trigger img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform 0.55s var(--ease-out-strong), opacity var(--duration-ui) ease;
+}
+
+.gallery-card__category-tag {
+  position: absolute;
+  left: var(--space-3);
+  top: var(--space-3);
+  padding: 0.22rem 0.6rem;
+  background-color: rgba(18, 12, 8, 0.82);
+  color: #f69d41;
+  border: 1px solid rgba(246, 157, 65, 0.48);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+
+.gallery-card__zoom-pill {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  padding: 0.28rem 0.68rem;
+  background-color: rgba(24, 17, 13, 0.88);
+  color: var(--color-ink-on-dark);
+  border: 1px solid #f69d41;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition:
+    background-color var(--duration-ui) ease,
+    color var(--duration-ui) ease,
+    transform var(--duration-ui) ease;
+}
+
+.gradient-carousel__card:not(.is-active) .gallery-card__zoom-pill {
+  background-color: rgba(24, 17, 13, 0.74);
+  border-color: rgba(216, 180, 103, 0.4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gradient-carousel__card.is-active .gallery-card__trigger:hover img {
+    transform: scale(1.035);
+  }
+
+  .gradient-carousel__card.is-active .gallery-card__trigger:hover .gallery-card__zoom-pill {
+    background-color: #f69d41;
+    color: #140d08;
+  }
+}
+
+.gallery-card__trigger:focus-visible {
+  outline: 3px solid #f69d41;
+  outline-offset: -3px;
+}
+
+.gallery-card__body {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex: 1;
+  background: linear-gradient(180deg, #FAF7F0 0%, #F2EBDD 100%);
+  border-top: 2px solid var(--color-material-gold);
+}
+
+.gradient-carousel__card.is-active .gallery-card__body {
+  border-top-color: #f69d41;
+}
+
+.gallery-card__title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: var(--color-ink-primary);
+}
+
+.gallery-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-ink-secondary);
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gallery-card__credit {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-ink-muted);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-hairline);
+  margin-top: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Controles de navegación e indicadores del carrusel */
+.gradient-carousel__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4) var(--space-6);
+  margin-top: var(--space-1);
+}
+
+.gradient-carousel__nav-btn {
+  gap: var(--space-2);
+  min-width: 8.5rem;
+}
+
+.gradient-carousel__pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background-color: rgba(24, 17, 13, 0.72);
+  border: 1px solid rgba(246, 157, 65, 0.32);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+.gradient-carousel__dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(246, 157, 65, 0.6);
+  background-color: rgba(247, 242, 230, 0.22);
+  transition:
+    width 0.3s var(--ease-solemn),
+    background-color 0.3s var(--ease-solemn),
+    transform 0.2s ease;
+}
+
+.gradient-carousel__dot.is-active {
+  width: 28px;
+  background-color: #f69d41;
+  border-color: #ffffff;
+}
+
+.gradient-carousel__dot:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Ficha de resumen e inspección rápida de la lámina central */
+.gradient-carousel__active-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: linear-gradient(
+    90deg,
+    rgba(28, 20, 14, 0.88) 0%,
+    rgba(38, 27, 19, 0.84) 100%
+  );
+  border: 1px solid rgba(246, 157, 65, 0.38);
+  border-left: 4px solid #f69d41;
+  border-radius: var(--radius-xs);
+  box-shadow: 0 12px 30px -10px rgba(8, 5, 3, 0.65);
+  backdrop-filter: blur(8px);
+}
+
+.gradient-carousel__active-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gradient-carousel__active-cat {
+  color: #f69d41;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.gradient-carousel__active-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-ink-on-dark);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. PÁGINA ACTUALIDAD Y ACTIVIDADES (actualidad.html)
+   -------------------------------------------------------------------------- */
+.bulletin-lead {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--color-border-medium);
+}
+
+.bulletin-lead__media,
+.bulletin-item__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--color-border-medium);
+  background-color: var(--color-bg-elevated);
+}
+
+.bulletin-lead__media img,
+.bulletin-item__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bulletin-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.bulletin-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+}
+
+.bulletin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+
+.bulletin-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   6. PÁGINA VISITA Y CONTACTO (visita.html)
+   -------------------------------------------------------------------------- */
+.map-frame-box .skeuo-carved-wood-frame__mat {
+  aspect-ratio: 16 / 10;
+}
+
+/* --------------------------------------------------------------------------
+   7. PÁGINA MUSEO VIRTUAL (museo.html) — Composición de portada sin visor 3D
+   -------------------------------------------------------------------------- */
+.museum-cover {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.museum-cover__plate .skeuo-carved-wood-frame__mat {
+  aspect-ratio: 4 / 3;
+}
+
+.museum-notice-box {
+  margin-top: var(--space-4);
+  padding: var(--space-6);
+  background-color: var(--color-bg-parchment);
+  border: 1px solid var(--color-border-strong);
+  border-left: 5px solid var(--color-accent-almagre);
+  box-shadow: var(--shadow-ambient-sm);
+}
+
+/* --------------------------------------------------------------------------
+   8. CASCADA SUTIL DE ENTRADA Y RESPONSIVIDAD (< 1024px y < 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .gradient-carousel__stage {
+    height: clamp(430px, 64vw, 520px);
+  }
+
+  .gradient-carousel__card {
+    width: clamp(275px, 56vw, 450px);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-institutional {
+    min-height: auto;
+    padding-block: var(--space-8);
+  }
+
+  .hero-institutional__grid,
+  .featured-shortcuts,
+  .heritage-entry,
+  .heritage-entry:nth-child(even),
+  .bulletin-lead,
+  .bulletin-grid,
+  .museum-cover {
+    grid-template-columns: 1fr;
+  }
+
+  .heritage-entry:nth-child(even) .heritage-entry__media,
+  .heritage-entry:nth-child(even) .heritage-entry__dossier {
+    order: initial;
+  }
+
+  .gallery-carousel-header__status {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .gradient-carousel__stage {
+    height: 430px;
+    perspective: 900px;
+  }
+
+  .gradient-carousel__card {
+    width: min(84vw, 355px);
+  }
+
+  .gallery-card__body {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .gallery-card__title {
+    font-size: 1.06rem;
+  }
+
+  .gradient-carousel__controls {
+    gap: var(--space-3);
+  }
+
+  .gradient-carousel__nav-btn {
+    min-width: auto;
+    padding-inline: var(--space-4);
+  }
+
+  .gradient-carousel__active-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-4);
+  }
+}
